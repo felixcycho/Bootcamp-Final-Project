@@ -1,0 +1,21 @@
+server:
+  port: 8090  # data-provider: 8090, stock-data: 8091, heatmap-ui: 8092
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bootcamp_db
+    username: postgres
+    password: admin123  # Change in production
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # For dev; use 'validate' in prod
+    show-sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
