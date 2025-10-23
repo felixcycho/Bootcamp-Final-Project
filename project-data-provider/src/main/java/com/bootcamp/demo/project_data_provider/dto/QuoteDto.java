@@ -1,4 +1,4 @@
-package com.bootcamp.demo.project_data_provider.model.dto;
+package com.bootcamp.demo.project_data_provider.dto;
 
 import java.time.LocalDateTime;
 import lombok.Builder;
