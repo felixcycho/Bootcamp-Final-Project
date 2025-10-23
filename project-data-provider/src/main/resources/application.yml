@@ -1,7 +1,7 @@
 api-service:
   finnhub:
+    api-token: 'd1n3u8hr01qlvnp5dhv0d1n3u8hr01qlvnp5dhvg'
     # host: 'finnhub.io'
-    api-token: 'd3rfce1r01qopgh8ajv0d3rfce1r01qopgh8ajvg'
     # endpoints:
     #   quote:
     #     version: 'api/v1'
@@ -9,30 +9,4 @@ api-service:
     #   profile2:
     #     version: 'api/v1'
     #     endpoint: '/stock/profile'
-
-
-# server:
-#   port: 8090  # data-provider: 8090, stock-data: 8091, heatmap-ui: 8092
-# spring:
-#   datasource:
-#     url: jdbc:postgresql://localhost:5432/bootcamp_2508
-#     username: postgres
-#     password: admin1234  # Change in production
-#     driver-class-name: org.postgresql.Driver
-#   jpa:
-#     hibernate:
-#       ddl-auto: update  # For dev; use 'validate' in prod
-#       dialect: org.hibernate.dialect.PostgreSQLDialect  # Add this line
-#     show-sql: true
-#   data:
-#     redis:
-#       host: localhost
-#       port: 6379
-# finnhub:
-#   api:
-#     key: d3rfce1r01qopgh8ajv0d3rfce1r01qopgh8ajvg
-# management:
-#   endpoints:
-#     web:
-#       exposure:
-#         include: health,info
+    
