@@ -8,9 +8,9 @@ import lombok.Getter;
 @Builder
 public class QuoteDto {
   private String symbol;
-  private Double price; // close
+  private Double price;
   private Double dayHigh;
   private Double dayLow;
   private Double dayOpen;
-  private LocalDateTime datetime = LocalDateTime.now();
+  private LocalDateTime datetime;
 }
