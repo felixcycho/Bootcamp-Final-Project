@@ -1,6 +1,5 @@
 package com.bootcamp.demo.project_data_provider.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,12 +17,6 @@ public class StockServiceImpl implements StockService {
   private String apiToken;
   private ApiUtils apiUtils;
   private RestTemplate restTemplate;
-
-  public StockServiceImpl (String apiToken, ApiUtils apiUtils, RestTemplate restTemplate) {
-    this.apiToken = apiToken;
-    this.apiUtils = apiUtils;
-    this.restTemplate = restTemplate;
-  }
 
   @Override
   public QuoteDTO getQuote(String symbol, String apiToken) {
@@ -53,7 +46,5 @@ public class StockServiceImpl implements StockService {
     return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
 
   }
-
-
 
 }

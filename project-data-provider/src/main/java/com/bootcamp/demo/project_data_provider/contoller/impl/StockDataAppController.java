@@ -1,7 +1,6 @@
 package com.bootcamp.demo.project_data_provider.contoller.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bootcamp.demo.project_data_provider.contoller.StockDataAppOperation;
 import com.bootcamp.demo.project_data_provider.model.dto.CompanyProfileDTO;
@@ -21,6 +20,6 @@ public class StockDataAppController implements StockDataAppOperation {
 
   @Override
   public CompanyProfileDTO getCompanyProfile(String symbol, String apiToken) {
-    return 
+    return this.stockService.getCompanyProfile(symbol, apiToken);
   }
 }

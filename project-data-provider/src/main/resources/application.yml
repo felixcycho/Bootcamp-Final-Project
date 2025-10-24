@@ -1,3 +1,9 @@
+server:
+  port: 8090        
+  # 8090: project_data_provider
+  # 8091: project_stock_data
+  # 8092: project_heatmap_ui
+
 api-service:
   finnhub:
     api-token: 'd1n3u8hr01qlvnp5dhv0d1n3u8hr01qlvnp5dhvg'
