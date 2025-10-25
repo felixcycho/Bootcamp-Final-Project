@@ -17,6 +17,7 @@ public class StockServiceImpl implements StockService {
 
   @Value("${api-service.finnhub.api-token}")
   private String apiToken;
+
   @Autowired
   private RestTemplate restTemplate;
 
@@ -28,17 +29,28 @@ public class StockServiceImpl implements StockService {
         .scheme("https") //
         .path(ApiUtils.quoteEndpoint) //
         .queryParam("symbol", symbol) //
-        .queryParam("token", apiToken)
+        .queryParam("token", this.apiToken)
         .build() //
         .toUriString();
-    System.out.println("scheduleUrl = " + urlOfQuote);
-    try {
-      return this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
-    } catch (Exception e) {
-        // Log the error and return null or throw a custom exception
-        System.err.println("Error fetching schedule: " + e.getMessage());
-        return null;
-    }
+    System.out.println("Quote Url = " + urlOfQuote);
+    // return this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
+    QuoteDTO quoteDTO = this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
+    return new QuoteDTO(
+      symbol, // Use the input symbol
+      quoteDTO.getPrice(),
+      quoteDTO.getDayHigh(),
+      quoteDTO.getDayLow(),
+      quoteDTO.getDayOpen(),
+      quoteDTO.getPreviousClosingPrice(),
+      quoteDTO.getDatetime()
+    );
+    // try {
+    //   return this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
+    // } catch (Exception e) {
+    //     // Log the error and return null or throw a custom exception
+    //     System.err.println("Error fetching schedule: " + e.getMessage());
+    //     return null;
+    // }
     
   }
 
@@ -50,17 +62,18 @@ public class StockServiceImpl implements StockService {
         .scheme("https") //
         .path(ApiUtils.companyProfileEndpoint) //
         .queryParam("symbol", symbol) //
-        .queryParam("token", apiToken)
+        .queryParam("token", this.apiToken)
         .build() //
         .toUriString();
-    System.out.println("scheduleUrl = " + urlOfCompanyProfile);
-    try {
-      return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
-    } catch (Exception e) {
-        // Log the error and return null or throw a custom exception
-        System.err.println("Error fetching schedule: " + e.getMessage());
-        return null;
-    }
+    System.out.println("Company Profile Url = " + urlOfCompanyProfile);
+    return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
+    // try {
+    //   return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
+    // } catch (Exception e) {
+    //     // Log the error and return null or throw a custom exception
+    //     System.err.println("Error fetching schedule: " + e.getMessage());
+    //     return null;
+    // }
 
   }
 

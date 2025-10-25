@@ -6,7 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class CompanyProfileDto {
-  private String symbol;
   private String currency;
   private String exchange;
   private Long marketCapitalization;
