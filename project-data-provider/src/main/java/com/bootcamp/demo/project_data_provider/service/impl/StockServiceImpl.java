@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownContentTypeException;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.bootcamp.demo.project_data_provider.finnhub.util.ApiUtils;
 import com.bootcamp.demo.project_data_provider.model.dto.CompanyProfileDTO;
@@ -27,10 +28,18 @@ public class StockServiceImpl implements StockService {
         .scheme("https") //
         .path(ApiUtils.quoteEndpoint) //
         .queryParam("symbol", symbol) //
+        .queryParam("apiToken", apiToken)
         .build() //
         .toUriString();
     System.out.println("scheduleUrl = " + urlOfQuote);
-    return this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
+    try {
+      return this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
+    } catch (Exception e) {
+        // Log the error and return null or throw a custom exception
+        System.err.println("Error fetching schedule: " + e.getMessage());
+        return null;
+    }
+    
   }
 
   @Override
@@ -41,10 +50,17 @@ public class StockServiceImpl implements StockService {
         .scheme("https") //
         .path(ApiUtils.companyProfileEndpoint) //
         .queryParam("symbol", symbol) //
+        .queryParam("apiToken", apiToken)
         .build() //
         .toUriString();
     System.out.println("scheduleUrl = " + urlOfCompanyProfile);
-    return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
+    try {
+      return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
+    } catch (Exception e) {
+        // Log the error and return null or throw a custom exception
+        System.err.println("Error fetching schedule: " + e.getMessage());
+        return null;
+    }
 
   }
 

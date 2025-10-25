@@ -7,8 +7,10 @@ import com.bootcamp.demo.project_data_provider.model.dto.QuoteDTO;
 
 public interface StockDataAppOperation {
   @GetMapping(value = "/quote")
-  QuoteDTO getQuote(@RequestParam(value = "s") String symbol, @RequestParam String apiToken);
+  // QuoteDTO getQuote(@RequestParam(value = "s") String symbol, @RequestParam String apiToken);
+  QuoteDTO getQuote(@RequestParam String symbol, @RequestParam String apiToken);
   
   @GetMapping(value = "/profile2")
-  CompanyProfileDTO getCompanyProfile(@RequestParam(value = "s") String symbol, @RequestParam String apiToken);
+  // CompanyProfileDTO getCompanyProfile(@RequestParam(value = "s") String symbol, @RequestParam String apiToken);
+  CompanyProfileDTO getCompanyProfile(@RequestParam String symbol, @RequestParam String apiToken);
 }
