@@ -1,5 +1,6 @@
 package com.bootcamp.demo.project_data_provider.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -15,7 +16,7 @@ public class StockServiceImpl implements StockService {
 
   @Value("${api-service.finnhub.api-token}")
   private String apiToken;
-  private ApiUtils apiUtils;
+  @Autowired
   private RestTemplate restTemplate;
 
   @Override
