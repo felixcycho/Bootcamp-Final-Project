@@ -28,7 +28,7 @@ public class StockServiceImpl implements StockService {
         .scheme("https") //
         .path(ApiUtils.quoteEndpoint) //
         .queryParam("symbol", symbol) //
-        .queryParam("apiToken", apiToken)
+        .queryParam("token", apiToken)
         .build() //
         .toUriString();
     System.out.println("scheduleUrl = " + urlOfQuote);
@@ -50,7 +50,7 @@ public class StockServiceImpl implements StockService {
         .scheme("https") //
         .path(ApiUtils.companyProfileEndpoint) //
         .queryParam("symbol", symbol) //
-        .queryParam("apiToken", apiToken)
+        .queryParam("token", apiToken)
         .build() //
         .toUriString();
     System.out.println("scheduleUrl = " + urlOfCompanyProfile);
