@@ -9,7 +9,7 @@ public class CompanyProfileDto {
   private String currency;
   private String exchange;
   private Long marketCapitalization;
-  private String name;
+  private String stockName;
   private String ticker;
-  private String industry;
+  private String mainIndustry;
 }

@@ -8,8 +8,9 @@ public class CompanyProfileDTO {
   private String currency;
   private String exchange;
   private Long marketCapitalization;
-  private String name;
+  @JsonProperty (value = "name")
+  private String stockName;
   private String ticker;
   @JsonProperty (value = "finnhubIndustry")
-  private String industry;
+  private String mainIndustry;
 }
