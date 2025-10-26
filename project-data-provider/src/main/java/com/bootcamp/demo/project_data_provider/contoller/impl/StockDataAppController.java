@@ -1,5 +1,6 @@
 package com.bootcamp.demo.project_data_provider.contoller.impl;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import com.bootcamp.demo.project_data_provider.contoller.StockDataAppOperation;
@@ -22,4 +23,20 @@ public class StockDataAppController implements StockDataAppOperation {
   public CompanyProfileDTO getCompanyProfile(String symbol, String apiToken) {
     return this.stockService.getCompanyProfile(symbol, apiToken);
   }
+
+  @Override
+  public List<String> fetchSymbols(String apiToken) {
+    return this.stockService.fetchSymbols(apiToken);
+  }
+
+  @Override
+  public List<QuoteDTO> fetchAllSP500Quotes(List<String> symbols, String apiToken) {
+    return this.stockService.fetchAllSP500Quotes(symbols, apiToken);
+  }
+
+  @Override
+  public List<CompanyProfileDTO> fetchAllSP500CompanyProfiles(List<String> symbols, String apiToken) {
+    return this.stockService.fetchAllSP500CompanyProfiles(symbols, apiToken);
+  }
+
 }
