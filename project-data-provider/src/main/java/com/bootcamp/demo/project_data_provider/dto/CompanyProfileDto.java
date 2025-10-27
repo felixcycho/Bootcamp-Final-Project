@@ -1,5 +1,6 @@
 package com.bootcamp.demo.project_data_provider.dto;
 
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,4 +13,5 @@ public class CompanyProfileDto {
   private String stockName;
   private String ticker;
   private String mainIndustry;
+  private LocalDateTime datetime;
 }
