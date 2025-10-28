@@ -1,7 +1,7 @@
 package com.bootcamp.demo.project_data_provider.model.dto;
 
 import java.time.LocalDateTime;
-import com.bootcamp.demo.project_data_provider.config.UnixTimestampDeserializer;
+import com.bootcamp.demo.project_data_provider.finnhub.util.UnixTimestampDeserializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;

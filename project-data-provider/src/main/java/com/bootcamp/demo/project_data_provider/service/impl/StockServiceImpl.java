@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import com.google.common.util.concurrent.RateLimiter;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +27,7 @@ import com.bootcamp.demo.project_data_provider.service.StockService;
 @Service
 public class StockServiceImpl implements StockService {
 
-  private static final org.slf4j.Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
   @Value("${api-service.finnhub.api-token}")
   private String apiToken;
@@ -31,12 +35,25 @@ public class StockServiceImpl implements StockService {
   @Autowired
   private RestTemplate restTemplate;
 
+  private final ExecutorService executor;
+  private final RateLimiter rateLimiter;          // 1 call per second per thread
+
+  public StockServiceImpl(RestTemplate restTemplate) {
+    this.restTemplate = restTemplate;
+
+    // 10 threads → max 600 calls/min (well under Finnhub free tier)
+    this.executor = Executors.newFixedThreadPool(10);
+
+    // Google Guava RateLimiter (add dependency if you like)
+    this.rateLimiter = RateLimiter.create(1.0); // 1 permit per second
+  }
+
   @Override
   public QuoteDTO getQuote(String symbol, String apiToken) {
     String urlOfQuote =
        UriComponentsBuilder.newInstance() //
-        .host(ApiUtils.finnhubHost) //
         .scheme("https") //
+        .host(ApiUtils.finnhubHost) //
         .path(ApiUtils.quoteEndpoint) //
         .queryParam("symbol", symbol) //
         .queryParam("token", this.apiToken)
@@ -46,6 +63,8 @@ public class StockServiceImpl implements StockService {
     // return this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
     try {
       QuoteDTO quoteDTO = this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
+      if (quoteDTO == null) 
+        return null;
       return new QuoteDTO(
         symbol, // Use the input symbol
         quoteDTO.getPrice(),
@@ -71,8 +90,8 @@ public class StockServiceImpl implements StockService {
   public CompanyProfileDTO getCompanyProfile(String symbol, String apiToken) {
     String urlOfCompanyProfile =
        UriComponentsBuilder.newInstance() //
-        .host(ApiUtils.finnhubHost) //
         .scheme("https") //
+        .host(ApiUtils.finnhubHost) //
         .path(ApiUtils.companyProfileEndpoint) //
         .queryParam("symbol", symbol) //
         .queryParam("token", this.apiToken)
@@ -122,7 +141,6 @@ public class StockServiceImpl implements StockService {
             } else {
                 quoteList.add(quoteDTO);
             }
-
             // Sleep to respect API rate limits
             try {
                 Thread.sleep(10000); // 10 seconds between requests
@@ -131,7 +149,6 @@ public class StockServiceImpl implements StockService {
                 logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
             }
         }
-
         // Retry failed symbols
         int retryCount = 0;
         while (!failedSymbols.isEmpty() && retryCount < 10) { // Limit retries to 3 attempts
@@ -143,7 +160,6 @@ public class StockServiceImpl implements StockService {
                     quoteList.add(quoteDTO);
                     failedSymbols.remove(symbol); // Remove from failed set if successful
                 }
-
                 // Sleep to respect API rate limits
                 try {
                     Thread.sleep(10000); // 10 seconds between requests
@@ -154,14 +170,11 @@ public class StockServiceImpl implements StockService {
             }
             retryCount++;
         }
-
         // Log final status
         if (!failedSymbols.isEmpty()) {
             logger.warn("Failed to fetch data for the following symbols after retries: {}", failedSymbols);
         }
-
         return quoteList; // Return the list of successfully fetched quote data
-
       }
 
   @Override
@@ -186,7 +199,6 @@ public class StockServiceImpl implements StockService {
                 logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
             }
         }
-
         // Retry failed symbols
         int retryCount = 0;
         while (!failedSymbols.isEmpty() && retryCount < 10) { // Limit retries to 3 attempts
@@ -198,7 +210,6 @@ public class StockServiceImpl implements StockService {
                     companyProfileList.add(companyProfileDTO);
                     failedSymbols.remove(symbol); // Remove from failed set if successful
                 }
-
                 // Sleep to respect API rate limits
                 try {
                     Thread.sleep(10000); // 10 seconds between requests
@@ -209,14 +220,11 @@ public class StockServiceImpl implements StockService {
             }
             retryCount++;
         }
-        
         // Log final status
         if (!failedSymbols.isEmpty()) {
             logger.warn("Failed to fetch data for the following symbols after retries: {}", failedSymbols);
         }
-
         return companyProfileList; // Return the list of successfully fetched quote data
-
       }
 
 }
