@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin1234
-      POSTGRES_DB: bootcamp_2508
+      POSTGRES_DB: bootcamp_2508_final_project
       PGDATA: /var/lib/postgresql/data/pgdata15
     networks:
       - bootcamp-network
