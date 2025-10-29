@@ -54,7 +54,7 @@ public class StockServiceImpl implements StockService {
        UriComponentsBuilder.newInstance() //
         .scheme("https") //
         .host(ApiUtils.finnhubHost) //
-        .path(ApiUtils.quoteEndpoint) //
+        .path(ApiUtils.finnhubQuoteEndpoint) //
         .queryParam("symbol", symbol) //
         .queryParam("token", this.apiToken)
         .build() //
@@ -92,7 +92,7 @@ public class StockServiceImpl implements StockService {
        UriComponentsBuilder.newInstance() //
         .scheme("https") //
         .host(ApiUtils.finnhubHost) //
-        .path(ApiUtils.companyProfileEndpoint) //
+        .path(ApiUtils.finnhubCompanyProfileEndpoint) //
         .queryParam("symbol", symbol) //
         .queryParam("token", this.apiToken)
         .build() //
@@ -114,7 +114,7 @@ public class StockServiceImpl implements StockService {
         List<String> symbols = new ArrayList<>();
 
         String listOfSymbols = 
-          "C://github/Bootcamp-Final-Project/python/symbols_list.txt";
+          "C://github/Bootcamp-Final-Project/python/sp500_symbols.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(listOfSymbols))) {
             String line;
