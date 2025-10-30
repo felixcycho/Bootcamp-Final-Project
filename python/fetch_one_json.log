@@ -670,3 +670,49 @@
 2025-10-30 12:19:16,559 | INFO | Committed 450 rows
 2025-10-30 12:19:16,564 | WARNING | Skipping empty: VTRS
 2025-10-30 12:19:16,592 | INFO | SUCCESS: 483 records loaded with clear column names
+2025-10-30 12:33:05,276 | INFO | Loaded 503 profiles from C:\github\Bootcamp-Final-Project\python\sp500_finnhub_profiles.json
+2025-10-30 12:33:05,278 | INFO | Found 20 failures: ['COR', 'CEG', 'COO', 'CPRT', 'FIS', 'FITB', 'GIS', 'HSIC', 'HST', 'ICE', 'INVH', 'JCI', 'JPM', 'K', 'KVUE', 'KDP', 'KEY', 'KEYS', 'PTC', 'VTRS']
+2025-10-30 12:33:05,280 | INFO | Saved failures to failed_finnhub_profiles.txt
+2025-10-30 12:33:05,282 | INFO | Refetching COR
+2025-10-30 12:33:06,487 | INFO | Success: COR ¡÷ Cencora Inc
+2025-10-30 12:33:07,589 | INFO | Refetching CEG
+2025-10-30 12:33:08,540 | INFO | Success: CEG ¡÷ Constellation Energy Corp
+2025-10-30 12:33:09,642 | INFO | Refetching COO
+2025-10-30 12:33:10,586 | INFO | Success: COO ¡÷ Cooper Companies Inc
+2025-10-30 12:33:11,688 | INFO | Refetching CPRT
+2025-10-30 12:33:12,626 | INFO | Success: CPRT ¡÷ Copart Inc
+2025-10-30 12:33:13,729 | INFO | Refetching FIS
+2025-10-30 12:33:14,646 | INFO | Success: FIS ¡÷ Fidelity National Information Services Inc
+2025-10-30 12:33:15,748 | INFO | Refetching FITB
+2025-10-30 12:33:16,583 | INFO | Success: FITB ¡÷ Fifth Third Bancorp
+2025-10-30 12:33:17,686 | INFO | Refetching GIS
+2025-10-30 12:33:18,569 | INFO | Success: GIS ¡÷ General Mills Inc
+2025-10-30 12:33:19,671 | INFO | Refetching HSIC
+2025-10-30 12:33:20,978 | INFO | Success: HSIC ¡÷ Henry Schein Inc
+2025-10-30 12:33:22,081 | INFO | Refetching HST
+2025-10-30 12:33:22,971 | INFO | Success: HST ¡÷ Host Hotels & Resorts Inc
+2025-10-30 12:33:24,073 | INFO | Refetching ICE
+2025-10-30 12:33:25,023 | INFO | Success: ICE ¡÷ Intercontinental Exchange Inc
+2025-10-30 12:33:26,126 | INFO | Refetching INVH
+2025-10-30 12:33:27,083 | INFO | Success: INVH ¡÷ Invitation Homes Inc
+2025-10-30 12:33:28,185 | INFO | Refetching JCI
+2025-10-30 12:33:29,054 | INFO | Success: JCI ¡÷ Johnson Controls International PLC
+2025-10-30 12:33:30,157 | INFO | Refetching JPM
+2025-10-30 12:33:31,072 | INFO | Success: JPM ¡÷ JPMorgan Chase & Co
+2025-10-30 12:33:32,174 | INFO | Refetching K
+2025-10-30 12:33:33,213 | INFO | Success: K ¡÷ Kellanova
+2025-10-30 12:33:34,314 | INFO | Refetching KVUE
+2025-10-30 12:33:35,236 | INFO | Success: KVUE ¡÷ Kenvue Inc
+2025-10-30 12:33:36,338 | INFO | Refetching KDP
+2025-10-30 12:33:37,257 | INFO | Success: KDP ¡÷ Keurig Dr Pepper Inc
+2025-10-30 12:33:38,360 | INFO | Refetching KEY
+2025-10-30 12:33:39,204 | INFO | Success: KEY ¡÷ KeyCorp
+2025-10-30 12:33:40,306 | INFO | Refetching KEYS
+2025-10-30 12:33:41,102 | INFO | Success: KEYS ¡÷ Keysight Technologies Inc
+2025-10-30 12:33:42,204 | INFO | Refetching PTC
+2025-10-30 12:33:43,083 | INFO | Success: PTC ¡÷ PTC Inc
+2025-10-30 12:33:44,185 | INFO | Refetching VTRS
+2025-10-30 12:33:44,996 | INFO | Success: VTRS ¡÷ Viatris Inc
+2025-10-30 12:33:46,115 | INFO | Updated JSON with 20 new profiles
+2025-10-30 12:33:46,620 | INFO | Re-loaded all data to PostgreSQL
+2025-10-30 12:33:46,621 | INFO | Refetch complete! Check failed_symbols.txt for any remaining issues.

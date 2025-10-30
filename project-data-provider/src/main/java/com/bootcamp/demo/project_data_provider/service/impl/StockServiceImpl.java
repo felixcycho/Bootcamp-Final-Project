@@ -27,7 +27,7 @@ import com.bootcamp.demo.project_data_provider.service.StockService;
 @Service
 public class StockServiceImpl implements StockService {
 
-  private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
+  // private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
   @Value("${api-service.finnhub.api-token}")
   private String apiToken;
@@ -35,17 +35,17 @@ public class StockServiceImpl implements StockService {
   @Autowired
   private RestTemplate restTemplate;
 
-  private final ExecutorService executor;
-  private final RateLimiter rateLimiter;          // 1 call per second per thread
+  //  private final ExecutorService executor;
+  //  private final RateLimiter rateLimiter;          // 1 call per second per thread
 
   public StockServiceImpl(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
 
     // 10 threads → max 600 calls/min (well under Finnhub free tier)
-    this.executor = Executors.newFixedThreadPool(10);
+    // this.executor = Executors.newFixedThreadPool(10);
 
     // Google Guava RateLimiter (add dependency if you like)
-    this.rateLimiter = RateLimiter.create(1.0); // 1 permit per second
+    // this.rateLimiter = RateLimiter.create(1.0); // 1 permit per second
   }
 
   @Override

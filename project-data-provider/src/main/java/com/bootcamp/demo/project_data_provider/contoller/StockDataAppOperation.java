@@ -18,10 +18,14 @@ public interface StockDataAppOperation {
   ProfileDTO getProfile(
     @RequestParam String symbol, @RequestParam String apiToken);
 
+ 
+
 
   @GetMapping(value = "/fetch/symbols")
   List<String> fetchSymbols(
     @RequestParam String apiToken);
+  
+
 
 
   // ! Not feasible, just for example only
