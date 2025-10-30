@@ -525,3 +525,148 @@
 2025-10-30 11:34:24,331 | INFO | [503/503] Fetching ZTS
 2025-10-30 11:34:26,229 | INFO | SUCCESS: All 503 profiles saved to:
    C:\github\Bootcamp-Final-Project\python\sp500_finnhub_profiles.json
+2025-10-30 11:42:35,544 | ERROR | No JSON file found!
+2025-10-30 11:43:01,222 | ERROR | No JSON file found!
+2025-10-30 11:43:28,114 | INFO | Loading data from: C:\github\Bootcamp-Final-Project\python\sp500_finnhub_profiles.json
+2025-10-30 11:43:28,118 | INFO | Loaded 503 company profiles
+2025-10-30 11:43:28,245 | INFO | Table sp500_finnhub ready
+2025-10-30 11:43:28,274 | INFO | Committed 50 records...
+2025-10-30 11:43:28,291 | WARNING | Skipping empty profile: COR
+2025-10-30 11:43:28,294 | INFO | Committed 100 records...
+2025-10-30 11:43:28,302 | WARNING | Skipping empty profile: CEG
+2025-10-30 11:43:28,303 | WARNING | Skipping empty profile: COO
+2025-10-30 11:43:28,303 | WARNING | Skipping empty profile: CPRT
+2025-10-30 11:43:28,315 | INFO | Committed 150 records...
+2025-10-30 11:43:28,329 | WARNING | Skipping empty profile: FIS
+2025-10-30 11:43:28,330 | WARNING | Skipping empty profile: FITB
+2025-10-30 11:43:28,335 | INFO | Committed 200 records...
+2025-10-30 11:43:28,340 | WARNING | Skipping empty profile: GIS
+2025-10-30 11:43:28,345 | WARNING | Skipping empty profile: HSIC
+2025-10-30 11:43:28,348 | WARNING | Skipping empty profile: HST
+2025-10-30 11:43:28,353 | WARNING | Skipping empty profile: ICE
+2025-10-30 11:43:28,356 | WARNING | Skipping empty profile: INVH
+2025-10-30 11:43:28,359 | INFO | Committed 250 records...
+2025-10-30 11:43:28,361 | WARNING | Skipping empty profile: JCI
+2025-10-30 11:43:28,362 | WARNING | Skipping empty profile: JPM
+2025-10-30 11:43:28,363 | WARNING | Skipping empty profile: K
+2025-10-30 11:43:28,363 | WARNING | Skipping empty profile: KVUE
+2025-10-30 11:43:28,364 | WARNING | Skipping empty profile: KDP
+2025-10-30 11:43:28,365 | WARNING | Skipping empty profile: KEY
+2025-10-30 11:43:28,365 | WARNING | Skipping empty profile: KEYS
+2025-10-30 11:43:28,382 | INFO | Committed 300 records...
+2025-10-30 11:43:28,400 | INFO | Committed 350 records...
+2025-10-30 11:43:28,406 | WARNING | Skipping empty profile: PTC
+2025-10-30 11:43:28,420 | INFO | Committed 400 records...
+2025-10-30 11:43:28,440 | INFO | Committed 450 records...
+2025-10-30 11:43:28,442 | WARNING | Skipping empty profile: VTRS
+2025-10-30 11:43:28,454 | INFO | SUCCESS: 483 records inserted/updated in PostgreSQL
+2025-10-30 12:00:46,207 | ERROR | No JSON file found!
+2025-10-30 12:02:33,510 | INFO | Loading from: C:\github\Bootcamp-Final-Project\python\sp500_finnhub_profiles.json
+2025-10-30 12:02:33,513 | INFO | Loaded 503 profiles
+2025-10-30 12:02:33,688 | INFO | Table sp500_finnhub_profile created with clear unit column names
+2025-10-30 12:02:33,709 | INFO | Committed 50 rows
+2025-10-30 12:02:33,726 | WARNING | Skipping empty: COR
+2025-10-30 12:02:33,731 | INFO | Committed 100 rows
+2025-10-30 12:02:33,740 | WARNING | Skipping empty: CEG
+2025-10-30 12:02:33,740 | WARNING | Skipping empty: COO
+2025-10-30 12:02:33,741 | WARNING | Skipping empty: CPRT
+2025-10-30 12:02:33,754 | INFO | Committed 150 rows
+2025-10-30 12:02:33,769 | WARNING | Skipping empty: FIS
+2025-10-30 12:02:33,770 | WARNING | Skipping empty: FITB
+2025-10-30 12:02:33,774 | INFO | Committed 200 rows
+2025-10-30 12:02:33,778 | WARNING | Skipping empty: GIS
+2025-10-30 12:02:33,783 | WARNING | Skipping empty: HSIC
+2025-10-30 12:02:33,787 | WARNING | Skipping empty: HST
+2025-10-30 12:02:33,793 | WARNING | Skipping empty: ICE
+2025-10-30 12:02:33,796 | WARNING | Skipping empty: INVH
+2025-10-30 12:02:33,798 | INFO | Committed 250 rows
+2025-10-30 12:02:33,801 | WARNING | Skipping empty: JCI
+2025-10-30 12:02:33,802 | WARNING | Skipping empty: JPM
+2025-10-30 12:02:33,802 | WARNING | Skipping empty: K
+2025-10-30 12:02:33,803 | WARNING | Skipping empty: KVUE
+2025-10-30 12:02:33,803 | WARNING | Skipping empty: KDP
+2025-10-30 12:02:33,804 | WARNING | Skipping empty: KEY
+2025-10-30 12:02:33,805 | WARNING | Skipping empty: KEYS
+2025-10-30 12:02:33,823 | INFO | Committed 300 rows
+2025-10-30 12:02:33,842 | INFO | Committed 350 rows
+2025-10-30 12:02:33,849 | WARNING | Skipping empty: PTC
+2025-10-30 12:02:33,863 | INFO | Committed 400 rows
+2025-10-30 12:02:33,881 | INFO | Committed 450 rows
+2025-10-30 12:02:33,884 | WARNING | Skipping empty: VTRS
+2025-10-30 12:02:33,896 | INFO | SUCCESS: 483 records loaded with clear column names
+2025-10-30 12:05:54,188 | INFO | Loading from: C:\github\Bootcamp-Final-Project\python\sp500_finnhub_profiles.json
+2025-10-30 12:05:54,192 | INFO | Loaded 503 profiles
+2025-10-30 12:05:54,246 | INFO | Table sp500_finnhub_profile created with clear unit column names
+2025-10-30 12:05:54,264 | INFO | Committed 50 rows
+2025-10-30 12:05:54,277 | WARNING | Skipping empty: COR
+2025-10-30 12:05:54,281 | INFO | Committed 100 rows
+2025-10-30 12:05:54,288 | WARNING | Skipping empty: CEG
+2025-10-30 12:05:54,289 | WARNING | Skipping empty: COO
+2025-10-30 12:05:54,289 | WARNING | Skipping empty: CPRT
+2025-10-30 12:05:54,300 | INFO | Committed 150 rows
+2025-10-30 12:05:54,313 | WARNING | Skipping empty: FIS
+2025-10-30 12:05:54,313 | WARNING | Skipping empty: FITB
+2025-10-30 12:05:54,317 | INFO | Committed 200 rows
+2025-10-30 12:05:54,321 | WARNING | Skipping empty: GIS
+2025-10-30 12:05:54,326 | WARNING | Skipping empty: HSIC
+2025-10-30 12:05:54,329 | WARNING | Skipping empty: HST
+2025-10-30 12:05:54,333 | WARNING | Skipping empty: ICE
+2025-10-30 12:05:54,337 | WARNING | Skipping empty: INVH
+2025-10-30 12:05:54,339 | INFO | Committed 250 rows
+2025-10-30 12:05:54,341 | WARNING | Skipping empty: JCI
+2025-10-30 12:05:54,341 | WARNING | Skipping empty: JPM
+2025-10-30 12:05:54,342 | WARNING | Skipping empty: K
+2025-10-30 12:05:54,342 | WARNING | Skipping empty: KVUE
+2025-10-30 12:05:54,343 | WARNING | Skipping empty: KDP
+2025-10-30 12:05:54,343 | WARNING | Skipping empty: KEY
+2025-10-30 12:05:54,343 | WARNING | Skipping empty: KEYS
+2025-10-30 12:05:54,359 | INFO | Committed 300 rows
+2025-10-30 12:05:54,372 | INFO | Committed 350 rows
+2025-10-30 12:05:54,376 | WARNING | Skipping empty: PTC
+2025-10-30 12:05:54,384 | INFO | Committed 400 rows
+2025-10-30 12:05:54,396 | INFO | Committed 450 rows
+2025-10-30 12:05:54,397 | WARNING | Skipping empty: VTRS
+2025-10-30 12:05:54,405 | INFO | SUCCESS: 483 records loaded with clear column names
+2025-10-30 12:18:56,512 | INFO | Loading from: C:\github\Bootcamp-Final-Project\python\sp500_finnhub_profiles.json
+2025-10-30 12:18:56,520 | INFO | Loaded 503 profiles
+2025-10-30 12:18:56,656 | INFO | Table sp500_finnhub_profile created with clear unit column names
+2025-10-30 12:18:56,690 | INFO | Committed 50 rows
+2025-10-30 12:18:56,711 | WARNING | Skipping empty: COR
+2025-10-30 12:18:56,718 | INFO | Committed 100 rows
+2025-10-30 12:18:56,727 | WARNING | Skipping empty: CEG
+2025-10-30 12:18:56,728 | WARNING | Skipping empty: COO
+2025-10-30 12:18:56,729 | WARNING | Skipping empty: CPRT
+2025-10-30 12:18:56,750 | INFO | Committed 150 rows
+2025-10-30 12:19:16,014 | INFO | Loading from: C:\github\Bootcamp-Final-Project\python\sp500_finnhub_profiles.json
+2025-10-30 12:19:16,022 | INFO | Loaded 503 profiles
+2025-10-30 12:19:16,126 | INFO | Table sp500_finnhub_profile created with clear unit column names
+2025-10-30 12:19:16,178 | INFO | Committed 50 rows
+2025-10-30 12:19:16,217 | WARNING | Skipping empty: COR
+2025-10-30 12:19:16,226 | INFO | Committed 100 rows
+2025-10-30 12:19:16,246 | WARNING | Skipping empty: CEG
+2025-10-30 12:19:16,247 | WARNING | Skipping empty: COO
+2025-10-30 12:19:16,248 | WARNING | Skipping empty: CPRT
+2025-10-30 12:19:16,277 | INFO | Committed 150 rows
+2025-10-30 12:19:16,313 | WARNING | Skipping empty: FIS
+2025-10-30 12:19:16,315 | WARNING | Skipping empty: FITB
+2025-10-30 12:19:16,326 | INFO | Committed 200 rows
+2025-10-30 12:19:16,335 | WARNING | Skipping empty: GIS
+2025-10-30 12:19:16,348 | WARNING | Skipping empty: HSIC
+2025-10-30 12:19:16,355 | WARNING | Skipping empty: HST
+2025-10-30 12:19:16,368 | WARNING | Skipping empty: ICE
+2025-10-30 12:19:16,374 | WARNING | Skipping empty: INVH
+2025-10-30 12:19:16,380 | INFO | Committed 250 rows
+2025-10-30 12:19:16,385 | WARNING | Skipping empty: JCI
+2025-10-30 12:19:16,386 | WARNING | Skipping empty: JPM
+2025-10-30 12:19:16,387 | WARNING | Skipping empty: K
+2025-10-30 12:19:16,389 | WARNING | Skipping empty: KVUE
+2025-10-30 12:19:16,389 | WARNING | Skipping empty: KDP
+2025-10-30 12:19:16,391 | WARNING | Skipping empty: KEY
+2025-10-30 12:19:16,392 | WARNING | Skipping empty: KEYS
+2025-10-30 12:19:16,429 | INFO | Committed 300 rows
+2025-10-30 12:19:16,472 | INFO | Committed 350 rows
+2025-10-30 12:19:16,484 | WARNING | Skipping empty: PTC
+2025-10-30 12:19:16,513 | INFO | Committed 400 rows
+2025-10-30 12:19:16,559 | INFO | Committed 450 rows
+2025-10-30 12:19:16,564 | WARNING | Skipping empty: VTRS
+2025-10-30 12:19:16,592 | INFO | SUCCESS: 483 records loaded with clear column names
