@@ -19,7 +19,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.bootcamp.demo.project_data_provider.finnhub.util.ApiUtils;
-import com.bootcamp.demo.project_data_provider.model.dto.CompanyProfileDTO;
+import com.bootcamp.demo.project_data_provider.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_data_provider.model.dto.QuoteDTO;
 import com.bootcamp.demo.project_data_provider.service.StockService;
 
@@ -49,7 +49,7 @@ public class StockServiceImpl implements StockService {
   }
 
   @Override
-  public QuoteDTO getQuote(String symbol, String apiToken) {
+  public QuoteDTO getCurrentQuote(String symbol, String apiToken) {
     String urlOfQuote =
        UriComponentsBuilder.newInstance() //
         .scheme("https") //
@@ -87,20 +87,20 @@ public class StockServiceImpl implements StockService {
 
 
   @Override
-  public CompanyProfileDTO getCompanyProfile(String symbol, String apiToken) {
-    String urlOfCompanyProfile =
+  public ProfileDTO getProfile(String symbol, String apiToken) {
+    String urlOfProfile =
        UriComponentsBuilder.newInstance() //
         .scheme("https") //
         .host(ApiUtils.finnhubHost) //
-        .path(ApiUtils.finnhubCompanyProfileEndpoint) //
+        .path(ApiUtils.finnhubProfileEndpoint) //
         .queryParam("symbol", symbol) //
         .queryParam("token", this.apiToken)
         .build() //
         .toUriString();
-    System.out.println("Company Profile Url = " + urlOfCompanyProfile);
+    System.out.println("Company Profile Url = " + urlOfProfile);
     // return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
     try {
-      return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
+      return this.restTemplate.getForObject(urlOfProfile, ProfileDTO.class);
     } catch (Exception e) {
         // Log the error and return null or throw a custom exception
         System.err.println("Error fetching schedule: " + e.getMessage());
@@ -128,103 +128,106 @@ public class StockServiceImpl implements StockService {
   }
 
 
-  @Override
-  public List<QuoteDTO> fetchAllSP500Quotes(List<String> symbols, String apiToken) {
-        List<QuoteDTO> quoteList = new ArrayList<>();
-        Set<String> failedSymbols = new HashSet<>();
+  //   ! Not feasible, just for example only
+  //   @Override
+  //   public List<QuoteDTO> fetchAllSP500Quotes(List<String> symbols, String apiToken) {
+  //         List<QuoteDTO> quoteList = new ArrayList<>();
+  //         Set<String> failedSymbols = new HashSet<>();
 
-        // First attempt to fetch data
-        for (String symbol : symbols) {
-            QuoteDTO quoteDTO = getQuote(symbol, apiToken);
-            if (quoteDTO == null) {
-                failedSymbols.add(symbol);
-            } else {
-                quoteList.add(quoteDTO);
-            }
-            // Sleep to respect API rate limits
-            try {
-                Thread.sleep(10000); // 10 seconds between requests
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // Restore interrupted status
-                logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
-            }
-        }
-        // Retry failed symbols
-        int retryCount = 0;
-        while (!failedSymbols.isEmpty() && retryCount < 10) { // Limit retries to 3 attempts
-            logger.info("Retrying failed symbols: {}", failedSymbols);
-            Set<String> currentFailures = new HashSet<>(failedSymbols);
-            for (String symbol : currentFailures) {
-                QuoteDTO quoteDTO = getQuote(symbol, apiToken);
-                if (quoteDTO != null) {
-                    quoteList.add(quoteDTO);
-                    failedSymbols.remove(symbol); // Remove from failed set if successful
-                }
-                // Sleep to respect API rate limits
-                try {
-                    Thread.sleep(10000); // 10 seconds between requests
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // Restore interrupted status
-                    logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
-                }
-            }
-            retryCount++;
-        }
-        // Log final status
-        if (!failedSymbols.isEmpty()) {
-            logger.warn("Failed to fetch data for the following symbols after retries: {}", failedSymbols);
-        }
-        return quoteList; // Return the list of successfully fetched quote data
-      }
+  //         // First attempt to fetch data
+  //         for (String symbol : symbols) {
+  //             QuoteDTO quoteDTO = getCurrentQuote(symbol, apiToken);
+  //             if (quoteDTO == null) {
+  //                 failedSymbols.add(symbol);
+  //             } else {
+  //                 quoteList.add(quoteDTO);
+  //             }
+  //             // Sleep to respect API rate limits
+  //             try {
+  //                 Thread.sleep(10000); // 10 seconds between requests
+  //             } catch (InterruptedException e) {
+  //                 Thread.currentThread().interrupt(); // Restore interrupted status
+  //                 logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
+  //             }
+  //         }
+  //         // Retry failed symbols
+  //         int retryCount = 0;
+  //         while (!failedSymbols.isEmpty() && retryCount < 10) { // Limit retries to 3 attempts
+  //             logger.info("Retrying failed symbols: {}", failedSymbols);
+  //             Set<String> currentFailures = new HashSet<>(failedSymbols);
+  //             for (String symbol : currentFailures) {
+  //                 QuoteDTO quoteDTO = getCurrentQuote(symbol, apiToken);
+  //                 if (quoteDTO != null) {
+  //                     quoteList.add(quoteDTO);
+  //                     failedSymbols.remove(symbol); // Remove from failed set if successful
+  //                 }
+  //                 // Sleep to respect API rate limits
+  //                 try {
+  //                     Thread.sleep(10000); // 10 seconds between requests
+  //                 } catch (InterruptedException e) {
+  //                     Thread.currentThread().interrupt(); // Restore interrupted status
+  //                     logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
+  //                 }
+  //             }
+  //             retryCount++;
+  //         }
+  //         // Log final status
+  //         if (!failedSymbols.isEmpty()) {
+  //             logger.warn("Failed to fetch data for the following symbols after retries: {}", failedSymbols);
+  //         }
+  //         return quoteList; // Return the list of successfully fetched quote data
+  //       }
 
-  @Override
-  public List<CompanyProfileDTO> fetchAllSP500CompanyProfiles(List<String> symbols, String apiToken) {
-        List<CompanyProfileDTO> companyProfileList = new ArrayList<>();
-        Set<String> failedSymbols = new HashSet<>();
 
-        // First attempt to fetch data
-        for (String symbol : symbols) {
-            CompanyProfileDTO companyProfileDTO = getCompanyProfile(symbol, apiToken);
-            if (companyProfileDTO == null) {
-                failedSymbols.add(symbol);
-            } else {
-                companyProfileList.add(companyProfileDTO);
-            }
+  //   ! Not feasible, just for example only
+  //   @Override
+  //   public List<ProfileDTO> fetchAllSP500Profiles(List<String> symbols, String apiToken) {
+  //         List<ProfileDTO> profileList = new ArrayList<>();
+  //         Set<String> failedSymbols = new HashSet<>();
 
-            // Sleep to respect API rate limits
-            try {
-                Thread.sleep(10000); // 10 seconds between requests
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // Restore interrupted status
-                logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
-            }
-        }
-        // Retry failed symbols
-        int retryCount = 0;
-        while (!failedSymbols.isEmpty() && retryCount < 10) { // Limit retries to 3 attempts
-            logger.info("Retrying failed symbols: {}", failedSymbols);
-            Set<String> currentFailures = new HashSet<>(failedSymbols);
-            for (String symbol : currentFailures) {
-                CompanyProfileDTO companyProfileDTO = getCompanyProfile(symbol, apiToken);
-                if (companyProfileDTO != null) {
-                    companyProfileList.add(companyProfileDTO);
-                    failedSymbols.remove(symbol); // Remove from failed set if successful
-                }
-                // Sleep to respect API rate limits
-                try {
-                    Thread.sleep(10000); // 10 seconds between requests
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // Restore interrupted status
-                    logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
-                }
-            }
-            retryCount++;
-        }
-        // Log final status
-        if (!failedSymbols.isEmpty()) {
-            logger.warn("Failed to fetch data for the following symbols after retries: {}", failedSymbols);
-        }
-        return companyProfileList; // Return the list of successfully fetched quote data
-      }
+  //         // First attempt to fetch data
+  //         for (String symbol : symbols) {
+  //             ProfileDTO profileDTO = getProfile(symbol, apiToken);
+  //             if (profileDTO == null) {
+  //                 failedSymbols.add(symbol);
+  //             } else {
+  //                 profileList.add(profileDTO);
+  //             }
+
+  //             // Sleep to respect API rate limits
+  //             try {
+  //                 Thread.sleep(10000); // 10 seconds between requests
+  //             } catch (InterruptedException e) {
+  //                 Thread.currentThread().interrupt(); // Restore interrupted status
+  //                 logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
+  //             }
+  //         }
+  //         // Retry failed symbols
+  //         int retryCount = 0;
+  //         while (!failedSymbols.isEmpty() && retryCount < 10) { // Limit retries to 3 attempts
+  //             logger.info("Retrying failed symbols: {}", failedSymbols);
+  //             Set<String> currentFailures = new HashSet<>(failedSymbols);
+  //             for (String symbol : currentFailures) {
+  //                 ProfileDTO profileDTO = getProfile(symbol, apiToken);
+  //                 if (profileDTO != null) {
+  //                     profileList.add(profileDTO);
+  //                     failedSymbols.remove(symbol); // Remove from failed set if successful
+  //                 }
+  //                 // Sleep to respect API rate limits
+  //                 try {
+  //                     Thread.sleep(10000); // 10 seconds between requests
+  //                 } catch (InterruptedException e) {
+  //                     Thread.currentThread().interrupt(); // Restore interrupted status
+  //                     logger.error("Thread was interrupted while sleeping: {}", e.getMessage());
+  //                 }
+  //             }
+  //             retryCount++;
+  //         }
+  //         // Log final status
+  //         if (!failedSymbols.isEmpty()) {
+  //             logger.warn("Failed to fetch data for the following symbols after retries: {}", failedSymbols);
+  //         }
+  //         return profileList; // Return the list of successfully fetched quote data
+  //       }
 
 }

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 
 @Getter
-public class CompanyProfileDTO {
+public class ProfileDTO {
   private String currency;
   private String exchange;
   private Long marketCapitalization;

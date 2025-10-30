@@ -4,7 +4,8 @@ public final class ApiUtils {
   // public final static class Finnhub {
       public static final String finnhubHost = "finnhub.io";
       public static final String finnhubQuoteEndpoint = "/api/v1/quote";
-      public static final String finnhubCompanyProfileEndpoint = "/api/v1/stock/profile2";
+      public static final String finnhubProfileEndpoint = "/api/v1/stock/profile2";
   // }
+      
 
 }

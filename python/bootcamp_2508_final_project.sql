@@ -1,4 +1,3 @@
-
 create database bootcamp_2508_final_project;
 
 create table if not exists sp500_symbols (
@@ -16,6 +15,32 @@ create table if not exists sp500_info (
     founded 				TEXT 			NOT NULL
 );
 
+drop table IF EXISTS sp500_finnhub_profiles;
+create table IF NOT EXISTS sp500_finnhub_profiles (
+    symbol                				VARCHAR(10) PRIMARY KEY,
+    country               				VARCHAR(100),
+    currency             				VARCHAR(10),
+    estimate_currency     				VARCHAR(10),
+    exchange              				VARCHAR(255),
+    main_industry      				    VARCHAR(255),
+    floating_share_million      		NUMERIC,
+    ipo_date              				DATE,
+    logo                  				TEXT,
+    market_cap_usd_million          	NUMERIC,
+    name                  				VARCHAR(255),
+    phone                 				VARCHAR(50),
+    share_outstanding_million     		NUMERIC,
+    ticker                				VARCHAR(10),
+    weburl                				TEXT,
+    raw_json              				JSONB
+);
+
+create index idx_symbol on sp500_finnhub_profiles (symbol);
+create index idx_ticker on sp500_finnhub_profiles (ticker);
+create index idx_industry on sp500_finnhub_profiles (main_industry);
+create index idx_exchange on sp500_finnhub_profiles (exchange);
+  
+
 drop table IF EXISTS sp500_historical_data;
 create table sp500_historical_data (
     symbol  VARCHAR(10)   NOT NULL,
@@ -24,6 +49,7 @@ create table sp500_historical_data (
     value   DOUBLE PRECISION,
     PRIMARY KEY (symbol, date, metric)
 );
+
 create index idx_symbol on sp500_historical_data (symbol);
 create index idx_date   on sp500_historical_data (date);
 
@@ -41,6 +67,8 @@ select * from sp500_symbols limit 10;
 select count(*) from sp500_symbols;
 
 select * from sp500_info;
+
+select * from sp500_finnhub_profiles;
 
 select * from sp500_historical_data;
 
@@ -64,3 +92,4 @@ select symbol, date, value
 from sp500_historical_data
 where symbol = 'AAPL' and metric = 'close'
 order by date asc;
+

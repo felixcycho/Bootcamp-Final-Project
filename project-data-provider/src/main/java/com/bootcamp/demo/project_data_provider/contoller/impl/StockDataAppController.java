@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import com.bootcamp.demo.project_data_provider.contoller.StockDataAppOperation;
-import com.bootcamp.demo.project_data_provider.model.dto.CompanyProfileDTO;
+import com.bootcamp.demo.project_data_provider.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_data_provider.model.dto.QuoteDTO;
 import com.bootcamp.demo.project_data_provider.service.StockService;
 
@@ -15,13 +15,13 @@ public class StockDataAppController implements StockDataAppOperation {
   private StockService stockService;
 
   @Override
-  public QuoteDTO getQuote(String symbol, String apiToken) {
-    return this.stockService.getQuote(symbol, apiToken);
+  public QuoteDTO getCurrentQuote(String symbol, String apiToken) {
+    return this.stockService.getCurrentQuote(symbol, apiToken);
   }
 
   @Override
-  public CompanyProfileDTO getCompanyProfile(String symbol, String apiToken) {
-    return this.stockService.getCompanyProfile(symbol, apiToken);
+  public ProfileDTO getProfile(String symbol, String apiToken) {
+    return this.stockService.getProfile(symbol, apiToken);
   }
 
   @Override
@@ -29,14 +29,16 @@ public class StockDataAppController implements StockDataAppOperation {
     return this.stockService.fetchSymbols(apiToken);
   }
 
-  @Override
-  public List<QuoteDTO> fetchAllSP500Quotes(List<String> symbols, String apiToken) {
-    return this.stockService.fetchAllSP500Quotes(symbols, apiToken);
-  }
+  // ! Not feasible, just for example only
+  // @Override
+  // public List<QuoteDTO> fetchAllSP500Quotes(List<String> symbols, String apiToken) {
+  //   return this.stockService.fetchAllSP500Quotes(symbols, apiToken);
+  // }
 
-  @Override
-  public List<CompanyProfileDTO> fetchAllSP500CompanyProfiles(List<String> symbols, String apiToken) {
-    return this.stockService.fetchAllSP500CompanyProfiles(symbols, apiToken);
-  }
+  // ! Not feasible, just for example only
+  // @Override
+  // public List<ProfileDTO> fetchAllSP500Profiles(List<String> symbols, String apiToken) {
+  //   return this.stockService.fetchAllSP500Profiles(symbols, apiToken);
+  // }
 
 }

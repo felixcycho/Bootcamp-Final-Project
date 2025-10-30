@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CompanyProfileDto {
+public class ProfileDto {
   private String currency;
   private String exchange;
   private Long marketCapitalization;
