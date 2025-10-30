@@ -1,3 +1,4 @@
+
 create database bootcamp_2508_final_project;
 
 create table if not exists sp500_symbols (
