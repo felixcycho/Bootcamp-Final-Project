@@ -1,4 +1,4 @@
-package com.bootcamp.demo.project_data_provider.finnhub.util;
+package com.bootcamp.demo.project_stock_data.util;
 
 import java.time.LocalDateTime;
 

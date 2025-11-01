@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import com.bootcamp.demo.project_data_provider.finnhub.util.ApiUtils;
 import com.bootcamp.demo.project_data_provider.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_data_provider.model.dto.QuoteDTO;
 import com.bootcamp.demo.project_data_provider.model.dto.SymbolDTO;
 import com.bootcamp.demo.project_data_provider.service.StockService;
+import com.bootcamp.demo.project_data_provider.util.ApiUtils;
 
 
 @Service

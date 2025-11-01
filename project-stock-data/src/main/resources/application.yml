@@ -1,62 +1,25 @@
-# src/main/resources/application.yml
 server:
   port: 8091
 
 spring:
-  # -------------------------------------------------
-  # PostgreSQL (Docker container name)
-  # -------------------------------------------------
   datasource:
     url: jdbc:postgresql://postgres-container:5432/bootcamp_2508_final_project
     username: postgres
     password: admin1234
     driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 20
-      connection-timeout: 30000
-
-  # -------------------------------------------------
-  # JPA / Hibernate
-  # -------------------------------------------------
   jpa:
     hibernate:
-      ddl-auto: update          # create schema on startup
+      ddl-auto: update
     show-sql: false
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
-  # -------------------------------------------------
-  # Redis (Docker container name)
-  # -------------------------------------------------
-  redis:
+  data.redis:
     host: ${SPRING_REDIS_HOST:redis-container}
     port: 6379
-    timeout: 2000ms
-    lettuce:
-      pool:
-        max-active: 8
-        max-idle: 8
-        min-idle: 0
 
-  # -------------------------------------------------
-  # File Upload
-  # -------------------------------------------------
-  servlet:
-    multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
-
-# -------------------------------------------------
-# Custom App Properties
-# -------------------------------------------------
 app:
   provider:
     base-url: http://data-provider-app:8090
     api-token: d1n3u8hr01qlvnp5dhv0d1n3u8hr01qlvnp5dhvg
   upload:
     dir: /uploads
-  cache:
-    quote-ttl-seconds: 60
-    symbols-ttl-hours: 24
+
+
