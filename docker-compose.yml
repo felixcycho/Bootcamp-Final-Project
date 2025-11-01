@@ -1,4 +1,8 @@
+# docker-compose.yml
 services:
+  # -------------------------------------------------
+  # 1. PostgreSQL (your exact spec)
+  # -------------------------------------------------
   postgres:
     image: postgres:15
     container_name: postgres-container
@@ -13,7 +17,15 @@ services:
       - "5532:5432"
     volumes:
       - "./pgdata:/var/lib/postgresql/data/pgdata"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  # -------------------------------------------------
+  # 2. Redis (your exact spec)
+  # -------------------------------------------------
   redis:
     image: redis:7
     container_name: redis-container
@@ -23,15 +35,112 @@ services:
       - "6479:6379"
     volumes:
       - "./redis_data:/data"
-  
-  # You prepare the setup for your app.
-  # data-provider-app
-  # stock-data-app
-  # heatmap-ui-app
-  
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # -------------------------------------------------
+  # 3. Data Provider (Finnhub + local symbols)
+  # -------------------------------------------------
+  data-provider-app:
+    build: ./project-data-provider
+    container_name: data-provider-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-container:5432/bootcamp_2508_final_project
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin1234
+      - FINNHUB_TOKEN=d1n3u8hr01qlvnp5dhv0d1n3u8hr01qlvnp5dhvg
+    networks:
+      - bootcamp-network
+    ports:
+      - "8190:8090"          # host:container
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # -------------------------------------------------
+  # 4. Stock-Data Hub (read-through cache + OHLCV)
+  # -------------------------------------------------
+  stock-data-app:
+    build: ./project-stock-data
+    container_name: stock-data-app
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      data-provider-app:
+        condition: service_healthy
+    environment:
+      - SPRING_REDIS_HOST=redis-container
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-container:5432/bootcamp_2508_final_project
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin1234
+      - FINNHUB_TOKEN=d1n3u8hr01qlvnp5dhv0d1n3u8hr01qlvnp5dhvg
+      - APP_PROVIDER_BASEURL=http://data-provider-app:8090
+    networks:
+      - bootcamp-network
+    ports:
+      - "8191:8091"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8091/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # -------------------------------------------------
+  # 5. Heatmap UI (React + Vite)
+  # -------------------------------------------------
+  heatmap-ui-app:
+    build: ./project-headmap-ui
+    container_name: heatmap-ui-app
+    depends_on:
+      stock-data-app:
+        condition: service_healthy
+    environment:
+      - VITE_API_BASE=http://stock-data-app:8091/api
+    networks:
+      - bootcamp-network
+    ports:
+      - "3100:3000"
+
+  # -------------------------------------------------
+  # 6. Python collector (unchanged notebooks)
+  # -------------------------------------------------
+  python-collector:
+    build: ./python-collector
+    container_name: python-collector
+    depends_on:
+      postgres:
+        condition: service_healthy
+      data-provider-app:
+        condition: service_healthy
+    environment:
+      - FINNHUB_TOKEN=d1n3u8hr01qlvnp5dhv0d1n3u8hr01qlvnp5dhvg
+      - DB_PASSWORD=admin1234
+    volumes:
+      - ./python-collector:/app
+    networks:
+      - bootcamp-network
+    command: ["bash", "/app/run.sh"]
+    # Run once and exit – you can schedule it with cron outside Docker
+    restart: "no"
+
+# -------------------------------------------------
+# Global volumes & network
+# -------------------------------------------------
 volumes:
   redis_data:
 
 networks:
   bootcamp-network:
     driver: bridge
+

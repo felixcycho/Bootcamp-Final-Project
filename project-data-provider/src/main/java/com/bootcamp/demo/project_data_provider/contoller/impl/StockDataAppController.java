@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bootcamp.demo.project_data_provider.contoller.StockDataAppOperation;
 import com.bootcamp.demo.project_data_provider.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_data_provider.model.dto.QuoteDTO;
+import com.bootcamp.demo.project_data_provider.model.dto.SymbolDTO;
 import com.bootcamp.demo.project_data_provider.service.StockService;
 
 
@@ -21,13 +22,18 @@ public class StockDataAppController implements StockDataAppOperation {
 
   @Override
   public ProfileDTO getProfile(String symbol, String apiToken) {
-    return this.stockService.getProfile(symbol, apiToken);
+    return this.stockService.getProfile(symbol, apiToken);  
   }
 
   @Override
-  public List<String> fetchSymbols(String apiToken) {
-    return this.stockService.fetchSymbols(apiToken);
+  public List<SymbolDTO> fetchSymbols() {
+    return this.stockService.fetchSymbols();
   }
+
+  // @Override
+  // public List<String> fetchSymbols(String apiToken) {
+  //   return this.stockService.fetchSymbols(apiToken);
+  // }
 
   // ! Not feasible, just for example only
   // @Override

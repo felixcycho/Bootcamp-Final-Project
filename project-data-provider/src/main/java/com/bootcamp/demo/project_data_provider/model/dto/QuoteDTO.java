@@ -5,8 +5,10 @@ import com.bootcamp.demo.project_data_provider.finnhub.util.UnixTimestampDeseria
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class QuoteDTO {
 
   private String symbol;
@@ -18,22 +20,22 @@ public class QuoteDTO {
   private Double dayLow;
   @JsonProperty (value = "o")
   private Double dayOpen;
-  @JsonProperty (value = "pc")
-  private Double previousClosingPrice;
+  // @JsonProperty (value = "pc")
+  // private Double previousClosingPrice;
   @JsonProperty (value = "t")
   @JsonDeserialize(using = UnixTimestampDeserializer.class)
   private LocalDateTime datetime = LocalDateTime.now();
 
-  // Constructor for manual creation
-    public QuoteDTO(String symbol, Double price, Double dayHigh, 
-      Double dayLow, Double dayOpen, Double previousClosingPrice, 
-      LocalDateTime datetime) {
-        this.symbol = symbol;
-        this.price = price;
-        this.dayHigh = dayHigh;
-        this.dayLow = dayLow;
-        this.dayOpen = dayOpen;
-        this.previousClosingPrice = previousClosingPrice;
-        this.datetime = datetime;
-    }
+  public QuoteDTO(String symbol, Double price, Double dayHigh, 
+    Double dayLow, Double dayOpen, 
+    // Double previousClosingPrice, 
+    LocalDateTime datetime) {
+      this.symbol = symbol;
+      this.price = price;
+      this.dayHigh = dayHigh;
+      this.dayLow = dayLow;
+      this.dayOpen = dayOpen;
+      // this.previousClosingPrice = previousClosingPrice;
+      this.datetime = datetime;
+  }
 }

@@ -1,17 +1,13 @@
 package com.bootcamp.demo.project_data_provider.service.impl;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import com.google.common.util.concurrent.RateLimiter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.bootcamp.demo.project_data_provider.finnhub.util.ApiUtils;
 import com.bootcamp.demo.project_data_provider.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_data_provider.model.dto.QuoteDTO;
+import com.bootcamp.demo.project_data_provider.model.dto.SymbolDTO;
 import com.bootcamp.demo.project_data_provider.service.StockService;
 
 
@@ -53,13 +50,13 @@ public class StockServiceImpl implements StockService {
     String urlOfQuote =
        UriComponentsBuilder.newInstance() //
         .scheme("https") //
-        .host(ApiUtils.finnhubHost) //
-        .path(ApiUtils.finnhubQuoteEndpoint) //
+        .host(ApiUtils.Finnhub.finnhubHost) //
+        .path(ApiUtils.Finnhub.finnhubQuoteEndpoint) //
         .queryParam("symbol", symbol) //
         .queryParam("token", this.apiToken)
         .build() //
         .toUriString();
-    System.out.println("Quote Url = " + urlOfQuote);
+    System.out.println("Stock quote url = " + urlOfQuote);
     // return this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
     try {
       QuoteDTO quoteDTO = this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
@@ -71,7 +68,6 @@ public class StockServiceImpl implements StockService {
         quoteDTO.getDayHigh(),
         quoteDTO.getDayLow(),
         quoteDTO.getDayOpen(),
-        quoteDTO.getPreviousClosingPrice(),
         quoteDTO.getDatetime()
       );
     } catch (HttpClientErrorException e) {
@@ -91,13 +87,13 @@ public class StockServiceImpl implements StockService {
     String urlOfProfile =
        UriComponentsBuilder.newInstance() //
         .scheme("https") //
-        .host(ApiUtils.finnhubHost) //
-        .path(ApiUtils.finnhubProfileEndpoint) //
+        .host(ApiUtils.Finnhub.finnhubHost) //
+        .path(ApiUtils.Finnhub.finnhubProfileEndpoint) //
         .queryParam("symbol", symbol) //
         .queryParam("token", this.apiToken)
         .build() //
         .toUriString();
-    System.out.println("Company Profile Url = " + urlOfProfile);
+    System.out.println("Stock profile url = " + urlOfProfile);
     // return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
     try {
       return this.restTemplate.getForObject(urlOfProfile, ProfileDTO.class);
@@ -108,24 +104,55 @@ public class StockServiceImpl implements StockService {
     }
   }
 
-
   @Override
-  public List<String> fetchSymbols(String apiToken) {
-        List<String> symbols = new ArrayList<>();
+  public List<SymbolDTO> fetchSymbols() {
+    List<SymbolDTO> symbols = new ArrayList<>();
+    Path filePath = Path.of("C:/github/Bootcamp-Final-Project/python/sp500_symbols.txt");
 
-        String listOfSymbols = 
-          "C://github/Bootcamp-Final-Project/python/sp500_symbols.txt";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(listOfSymbols))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                symbols.add(line.trim()); // Trim whitespace
+    if (!Files.exists(filePath)) {
+        throw new IllegalStateException("File not found: " + filePath);
+    }
+    try (BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
+        String line;
+        while ((line = br.readLine()) != null) {
+            line = line.trim();
+            if (line.isEmpty() || line.startsWith("#")) {
+                continue; // Skip empty lines or comments
             }
-        } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            String[] parts = line.split("\\s+", 2); // Split on first whitespace
+            if (parts.length == 2) {
+                String symbol = parts[0].trim();
+                String companyName = parts[1].trim();
+                symbols.add(new SymbolDTO(symbol, companyName));
+            } else {
+                // Log warning or skip malformed line
+                System.err.println("Skipping malformed line: " + line);
+            }
         }
-        return symbols;
+    } catch (IOException e) {
+        throw new UncheckedIOException("Failed to read symbols file: " + filePath, e);
+    }
+    return symbols;
   }
+
+
+  // @Override
+  // public List<String> fetchSymbols(String apiToken) {
+  //       List<String> symbols = new ArrayList<>();
+
+  //       String listOfSymbols = 
+  //         "C://github/Bootcamp-Final-Project/python/sp500_symbols.txt";
+
+  //       try (BufferedReader br = new BufferedReader(new FileReader(listOfSymbols))) {
+  //           String line;
+  //           while ((line = br.readLine()) != null) {
+  //               symbols.add(line.trim()); // Trim whitespace
+  //           }
+  //       } catch (IOException e) {
+  //           e.printStackTrace(); // Handle the exception appropriately
+  //       }
+  //       return symbols;
+  // }
 
 
   //   ! Not feasible, just for example only
