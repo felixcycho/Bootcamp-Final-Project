@@ -18,7 +18,6 @@ import com.bootcamp.demo.project_stock_data.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.QuoteDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.SymbolDTO;
 import com.bootcamp.demo.project_stock_data.service.StockService;
-import com.bootcamp.demo.project_stock_data.util.ApiUtils;
 
 
 @Service
@@ -26,9 +25,9 @@ public class StockServiceImpl implements StockService {
 
   // private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
 
-  @Value("${api-service.base-url}")
-  private String apiBaseUrl;
-  @Value("${api-service.api-token}")
+  @Value("${app.provider.base-url}")
+  private String baseUrl;
+  @Value("${app.provider.api-token}")
   private String apiToken;
 
   @Autowired
@@ -52,8 +51,7 @@ public class StockServiceImpl implements StockService {
     String urlOfQuote =
        UriComponentsBuilder.newInstance() //
         .scheme("https") //
-        .host(ApiUtils.Finnhub.finnhubHost) //
-        .path(ApiUtils.Finnhub.finnhubQuoteEndpoint) //
+        .host(baseUrl) //
         .queryParam("symbol", symbol) //
         .queryParam("token", this.apiToken)
         .build() //
@@ -90,8 +88,7 @@ public class StockServiceImpl implements StockService {
     String urlOfProfile =
        UriComponentsBuilder.newInstance() //
         .scheme("https") //
-        .host(ApiUtils.Finnhub.finnhubHost) //
-        .path(ApiUtils.Finnhub.finnhubProfileEndpoint) //
+        .host(baseUrl) //
         .queryParam("symbol", symbol) //
         .queryParam("token", this.apiToken)
         .build() //
