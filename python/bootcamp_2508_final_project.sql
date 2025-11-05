@@ -1,8 +1,10 @@
 
+
 create database bootcamp_2508_final_project;
 
 create table if not exists sp500_symbols (
-    symbol VARCHAR(10) primary key UNIQUE NOT NULL
+    symbol 					VARCHAR(10) 	primary key UNIQUE NOT NULL,
+	security 				VARCHAR(255) 	NOT NULL
 );
 
 create table if not exists sp500_info (
@@ -15,6 +17,11 @@ create table if not exists sp500_info (
     cik 					VARCHAR(20) 	NOT NULL,
     founded 				TEXT 			NOT NULL
 );
+alter table sp500_info
+    rename column gics_sector       to main_industry;
+alter table sp500_info
+    rename column gics_sub_industry to sub_industry;
+	
 
 drop table IF EXISTS sp500_finnhub_profiles;
 create table IF NOT EXISTS sp500_finnhub_profiles (
@@ -42,8 +49,8 @@ create index idx_industry on sp500_finnhub_profiles (main_industry);
 create index idx_exchange on sp500_finnhub_profiles (exchange);
   
 
-drop table IF EXISTS sp500_historical_data;
-create table sp500_historical_data (
+drop table IF EXISTS sp500_ohlc_data;
+create table sp500_ohlc_data (
     symbol  VARCHAR(10)   NOT NULL,
     date    DATE          NOT NULL
 	metric  VARCHAR(6)    NOT NULL CHECK (metric IN ('open','high','low','close','volume')),
@@ -59,7 +66,7 @@ drop column company_name;
 
 drop table sp500_symbols;
 drop table sp500_info;
-drop table sp500_historical_data;
+drop table sp500_ohlc_data;
 
 select * from sp500_symbols;
 
@@ -71,26 +78,55 @@ select * from sp500_info;
 
 select * from sp500_finnhub_profiles;
 
-select * from sp500_historical_data;
+select * from sp500_ohlc_data;
 
 -- All AAPL prices
-select * from sp500_historical_data where symbol = 'AAPL' order by date;
+select * from sp500_ohlc_data where symbol = 'AAPL' order by date;
 
 -- Latest close for every stock (sort by symbol)
 select DISTINCT on (symbol) symbol, date, value
-from sp500_historical_data
+from sp500_ohlc_data
 where metric = 'close'
 order by symbol, date asc;
 
 -- Latest close for every stock (sort by date)
 select DISTINCT on (date) date, symbol, value
-from sp500_historical_data
+from sp500_ohlc_data
 where metric = 'close'
 order by date asc, symbol;
 
 -- Close price of AAPL on each date
 select symbol, date, value
-from sp500_historical_data
+from sp500_ohlc_data
 where symbol = 'AAPL' and metric = 'close'
 order by date asc;
 
+
+-- Generate table for heatmap ui
+SELECT DISTINCT 
+    p.ticker, 
+    p.name, 
+    p.market_cap_usd_millions, 
+    p.main_industry, 
+    i.sub_industry
+FROM 
+    sp500_finnhub_profiles p
+INNER JOIN 
+    sp500_info i
+ON 
+    p.ticker = i.symbol
+ORDER BY
+    p.ticker
+-- WHERE 
+--     p.market_cap_usd_millions > 1000  -- Filter for large companies
+-- ORDER BY 
+--     p.market_cap_usd_millions DESC;   -- Sort by market cap
+;
+
+
+-- Example of inner join
+-- SELECT p.*, q.*
+-- FROM sp500_finnhub_profiles p
+-- INNER JOIN sp500_finnhub_profiles q
+-- ON p.symbol = q.symbol;
+  

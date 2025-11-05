@@ -20,22 +20,22 @@ public class QuoteDTO {
   private Double dayLow;
   @JsonProperty (value = "o")
   private Double dayOpen;
-  // @JsonProperty (value = "pc")
-  // private Double previousClosingPrice;
+  @JsonProperty (value = "pc")
+  private Double previousClosingPrice;
   @JsonProperty (value = "t")
   @JsonDeserialize(using = UnixTimestampDeserializer.class)
   private LocalDateTime datetime = LocalDateTime.now();
 
   public QuoteDTO(String symbol, Double price, Double dayHigh, 
     Double dayLow, Double dayOpen, 
-    // Double previousClosingPrice, 
+    Double previousClosingPrice, 
     LocalDateTime datetime) {
       this.symbol = symbol;
       this.price = price;
       this.dayHigh = dayHigh;
       this.dayLow = dayLow;
       this.dayOpen = dayOpen;
-      // this.previousClosingPrice = previousClosingPrice;
+      this.previousClosingPrice = previousClosingPrice;
       this.datetime = datetime;
   }
 }

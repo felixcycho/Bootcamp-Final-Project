@@ -68,6 +68,7 @@ public class StockServiceImpl implements StockService {
         quoteDTO.getDayHigh(),
         quoteDTO.getDayLow(),
         quoteDTO.getDayOpen(),
+        quoteDTO.getPreviousClosingPrice(),
         quoteDTO.getDatetime()
       );
     } catch (HttpClientErrorException e) {
@@ -122,8 +123,8 @@ public class StockServiceImpl implements StockService {
             String[] parts = line.split("\\s+", 2); // Split on first whitespace
             if (parts.length == 2) {
                 String symbol = parts[0].trim();
-                String companyName = parts[1].trim();
-                symbols.add(new SymbolDTO(symbol, companyName));
+                String stockName = parts[1].trim();
+                symbols.add(new SymbolDTO(symbol, stockName));
             } else {
                 // Log warning or skip malformed line
                 System.err.println("Skipping malformed line: " + line);

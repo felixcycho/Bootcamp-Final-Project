@@ -3,17 +3,23 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://postgres-container:5432/bootcamp_2508_final_project
-    username: postgres
-    password: admin1234
-    driver-class-name: org.postgresql.Driver
+    # url: jdbc:postgresql://postgres-container:5432/bootcamp_2508_final_project
+    url: jdbc:postgresql://localhost:5432/bootcamp_2508_final_project
+    username: "postgres"
+    password: "admin1234"
+    driver-class-name: "org.postgresql.Driver"
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   data.redis:
-    host: ${SPRING_REDIS_HOST:redis-container}
+    # host: ${SPRING_REDIS_HOST:redis-container}
+    # host: redis-container
+    host: localhost
     port: 6379
+    database: 0
+    timeout: 3000ms
 
 app:
   provider:
