@@ -1,3 +1,4 @@
+
 package com.bootcamp.demo.project_stock_data.model.dto;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class ProfileDTO {
   private String symbol;
   private String currency;
   private String exchange;
-  private Long marketCapitalization;
+  private Long marketCapUsdMillions;
   @JsonProperty (value = "name")
   private String stockName;
   private String ticker;
@@ -23,12 +24,12 @@ public class ProfileDTO {
   private LocalDateTime datetime = LocalDateTime.now();
 
   public ProfileDTO(String symbol, String currency, String exchange,
-      Long marketCapitalization, String stockName, String ticker,
+      Long marketCapUsdMillions, String stockName, String ticker,
       String mainIndustry, LocalDateTime datetime) {
         this.symbol = symbol;
         this.currency = currency;
         this.exchange = exchange;
-        this.marketCapitalization = marketCapitalization;
+        this.marketCapUsdMillions = marketCapUsdMillions;
         this.stockName = stockName;
         this.ticker = ticker;
         this.mainIndustry = mainIndustry;

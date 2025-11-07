@@ -6,6 +6,7 @@ import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,7 @@ public class StockServiceImpl implements StockService {
         quoteDTO.getDayLow(),
         quoteDTO.getDayOpen(),
         quoteDTO.getPreviousClosingPrice(),
-        quoteDTO.getDatetime()
+        LocalDateTime.now()
       );
     } catch (HttpClientErrorException e) {
       // Handle client error (4xx)
@@ -97,7 +98,19 @@ public class StockServiceImpl implements StockService {
     System.out.println("Stock profile url = " + urlOfProfile);
     // return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
     try {
-      return this.restTemplate.getForObject(urlOfProfile, ProfileDTO.class);
+      ProfileDTO profileDTO = this.restTemplate.getForObject(urlOfProfile, ProfileDTO.class);
+      if (profileDTO == null) 
+        return null;
+      return new ProfileDTO(
+        symbol, // Use the input symbol
+        profileDTO.getCurrency(),
+        profileDTO.getExchange(),
+        profileDTO.getMarketCapUsdMillions(),
+        profileDTO.getStockName(),
+        profileDTO.getTicker(),
+        profileDTO.getMainIndustry(),
+        LocalDateTime.now()
+      );
     } catch (Exception e) {
         // Log the error and return null or throw a custom exception
         System.err.println("Error fetching schedule: " + e.getMessage());

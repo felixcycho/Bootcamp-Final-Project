@@ -15,8 +15,7 @@ public interface StockDataAppOperation {
   @GetMapping(value = "/get/profile")
   // CompanyProfileDTO getCompanyProfile(
     // @RequestParam(value = "s") String symbol, @RequestParam String apiToken);
-  ProfileDTO getProfile(
-    @RequestParam String symbol, @RequestParam String apiToken);
+  ProfileDTO getProfile(@RequestParam String symbol, @RequestParam String apiToken);
 
   @GetMapping(value = "/fetch/symbols")
   List<SymbolDTO> fetchSymbols();

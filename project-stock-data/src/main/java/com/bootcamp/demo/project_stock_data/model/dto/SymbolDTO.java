@@ -16,11 +16,11 @@ public class SymbolDTO{
   @JsonProperty("symbol")   
   private String symbol;      // e.g. "AAPL"
   @JsonProperty("name")     
-  private String companyName; // e.g. "Apple Inc."
+  private String stockName; // e.g. "Apple Inc."
 
-  public SymbolDTO(String symbol, String companyName) {
+  public SymbolDTO(String symbol, String stockName) {
     this.symbol = symbol;
-    this.companyName = companyName;
+    this.stockName = stockName;
   }
  
 }

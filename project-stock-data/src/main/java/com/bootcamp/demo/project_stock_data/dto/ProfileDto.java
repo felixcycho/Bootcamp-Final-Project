@@ -10,7 +10,7 @@ public class ProfileDto {
   private String symbol;
   private String currency;
   private String exchange;
-  private Long marketCapitalization;
+  private Long marketCapUsdMillions;
   private String stockName;
   private String ticker;
   private String mainIndustry;
