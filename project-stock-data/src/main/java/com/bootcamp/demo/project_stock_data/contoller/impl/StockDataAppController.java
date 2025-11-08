@@ -16,8 +16,8 @@ public class StockDataAppController implements StockDataAppOperation {
   private StockService stockService;
 
   @Override
-  public QuoteDTO getCurrentQuote(String symbol, String apiToken) {
-    return this.stockService.getCurrentQuote(symbol, apiToken);
+  public QuoteDTO getQuote(String symbol, String apiToken) {
+    return this.stockService.getQuote(symbol, apiToken);
   }
 
   @Override

@@ -38,13 +38,16 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public QuoteDTO getCurrentQuote(String symbol, String apiToken) {
+    public QuoteDTO getQuote(String symbol, String apiToken) {
         String url = UriComponentsBuilder.newInstance()
                 .scheme("http")
-                .host(baseUrl)                    // e.g. "localhost:8090" or "provider-data-provider:8090"
-                .path("/get/current_quote")
+                .host(this.baseUrl)                    // e.g. "localhost:8090" or "provider-data-provider:8090"
+                // .host("data-provider-app:8090")
+                // .pathSegment("data/stock/yahoofinance")
+                // .path("/get/current_quote")
+                .path("/get/quote")
                 .queryParam("symbol", symbol)
-                .queryParam("apiToken", this.apiToken)  // FIXED: was "token"
+                .queryParam("token", this.apiToken)  // FIXED: was "token"
                 .build()
                 .toUriString();
 
@@ -59,6 +62,8 @@ public class StockServiceImpl implements StockService {
             return new QuoteDTO(
                     symbol,
                     quoteDTO.getPrice(),
+                    quoteDTO.getPriceChange(),
+                    quoteDTO.getPercentChange(),
                     quoteDTO.getDayHigh(),
                     quoteDTO.getDayLow(),
                     quoteDTO.getDayOpen(),
@@ -78,10 +83,12 @@ public class StockServiceImpl implements StockService {
     public ProfileDTO getProfile(String symbol, String apiToken) {
         String url = UriComponentsBuilder.newInstance()
                 .scheme("http")
-                .host(baseUrl)
+                .host(this.baseUrl)
+                // .host("data-provider-app:8090")        // e.g. "localhost:8090" or "provider-data-provider:8090"
+                // .pathSegment("data/stock/finnhub")
                 .path("/get/profile")
                 .queryParam("symbol", symbol)
-                .queryParam("apiToken", this.apiToken)  // FIXED: was "token"
+                .queryParam("token", this.apiToken)  // FIXED: was "token"
                 .build()
                 .toUriString();
 

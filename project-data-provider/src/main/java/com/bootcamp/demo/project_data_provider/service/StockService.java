@@ -7,7 +7,7 @@ import com.bootcamp.demo.project_data_provider.model.dto.SymbolDTO;
 
 public interface StockService {
 
-   QuoteDTO getCurrentQuote(String symbol, String apiToken);
+   QuoteDTO getQuote(String symbol, String apiToken);
 
    ProfileDTO getProfile(String symbol, String apiToken);
 

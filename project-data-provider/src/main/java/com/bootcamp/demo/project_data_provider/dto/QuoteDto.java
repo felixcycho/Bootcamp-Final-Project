@@ -9,6 +9,8 @@ import lombok.Getter;
 public class QuoteDto {
   private String symbol;
   private Double price;
+  private Double priceChange;
+  private Double percentChange;
   private Double dayHigh;
   private Double dayLow;
   private Double dayOpen;

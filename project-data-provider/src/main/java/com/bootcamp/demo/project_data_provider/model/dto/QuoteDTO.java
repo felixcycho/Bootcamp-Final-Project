@@ -14,6 +14,10 @@ public class QuoteDTO {
   private String symbol;
   @JsonProperty (value = "c")
   private Double price;
+  @JsonProperty (value = "d")
+  private Double priceChange;
+  @JsonProperty (value = "dp")
+  private Double percentChange;
   @JsonProperty (value = "h")
   private Double dayHigh;
   @JsonProperty (value = "l")
@@ -26,12 +30,14 @@ public class QuoteDTO {
   @JsonDeserialize(using = UnixTimestampDeserializer.class)
   private LocalDateTime datetime = LocalDateTime.now();
 
-  public QuoteDTO(String symbol, Double price, Double dayHigh, 
-    Double dayLow, Double dayOpen, 
+  public QuoteDTO(String symbol, Double price, Double priceChange, Double percentChange, 
+    Double dayHigh, Double dayLow, Double dayOpen, 
     Double previousClosingPrice, 
     LocalDateTime datetime) {
       this.symbol = symbol;
       this.price = price;
+      this.priceChange = priceChange;
+      this.percentChange = percentChange;
       this.dayHigh = dayHigh;
       this.dayLow = dayLow;
       this.dayOpen = dayOpen;

@@ -8,9 +8,9 @@ import com.bootcamp.demo.project_stock_data.model.dto.QuoteDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.SymbolDTO;
 
 public interface StockDataAppOperation {
-  @GetMapping(value = "/get/current_quote")
+  @GetMapping(value = "/get/quote")
   // QuoteDTO getQuote(@RequestParam(value = "s") String symbol, @RequestParam String apiToken);
-  QuoteDTO getCurrentQuote(@RequestParam String symbol, @RequestParam String apiToken);
+  QuoteDTO getQuote(@RequestParam String symbol, @RequestParam String apiToken);
   
   @GetMapping(value = "/get/profile")
   // CompanyProfileDTO getCompanyProfile(

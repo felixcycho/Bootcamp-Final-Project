@@ -47,7 +47,7 @@ public class StockServiceImpl implements StockService {
   }
 
   @Override
-  public QuoteDTO getCurrentQuote(String symbol, String apiToken) {
+  public QuoteDTO getQuote(String symbol, String apiToken) {
     String urlOfQuote =
        UriComponentsBuilder.newInstance() //
         .scheme("https") //
@@ -66,6 +66,8 @@ public class StockServiceImpl implements StockService {
       return new QuoteDTO(
         symbol, // Use the input symbol
         quoteDTO.getPrice(),
+        quoteDTO.getPriceChange(),
+        quoteDTO.getPercentChange(),
         quoteDTO.getDayHigh(),
         quoteDTO.getDayLow(),
         quoteDTO.getDayOpen(),
