@@ -3,11 +3,10 @@ package com.bootcamp.demo.project_data_provider.model.dto;
 import java.time.LocalDateTime;
 import com.bootcamp.demo.project_data_provider.util.UnixToHKTimeDeserializer;
 // import com.bootcamp.demo.project_data_provider.util.UnixTimestampDeserializer;
-import com.fasterxml.jackson.annotation.JsonFormat;
+// import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

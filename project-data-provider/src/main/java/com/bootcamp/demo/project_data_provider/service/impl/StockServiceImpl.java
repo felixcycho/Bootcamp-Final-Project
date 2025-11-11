@@ -1,14 +1,6 @@
 package com.bootcamp.demo.project_data_provider.service.impl;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.bootcamp.demo.project_data_provider.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_data_provider.model.dto.QuoteDTO;
-import com.bootcamp.demo.project_data_provider.model.dto.SymbolDTO;
 import com.bootcamp.demo.project_data_provider.service.StockService;
 import com.bootcamp.demo.project_data_provider.util.ApiUtils;
 

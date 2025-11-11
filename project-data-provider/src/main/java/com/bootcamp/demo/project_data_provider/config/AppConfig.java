@@ -14,7 +14,7 @@ public class AppConfig {
     return new RestTemplate();
   }
 
-   @Bean
+  @Bean
   ObjectMapper objectMapper() {
     // return new ObjectMapper();           // stateless
     ObjectMapper objectMapper = new ObjectMapper();
