@@ -14,7 +14,12 @@ import com.bootcamp.demo.project_stock_data.service.StockService;
 public class StockDataAppController implements StockDataAppOperation {
   @Autowired
   private StockService stockService;
-
+  
+  @Override
+  public List<SymbolDTO> fetchSymbols() {
+    return this.stockService.fetchSymbols();
+  }
+  
   @Override
   public QuoteDTO getQuote(String symbol, String apiToken) {
     return this.stockService.getQuote(symbol, apiToken);
@@ -25,20 +30,5 @@ public class StockDataAppController implements StockDataAppOperation {
     return this.stockService.getProfile(symbol, apiToken);  
   }
 
-  // @Override
-  // public QuoteDTO getQuote(String symbol) {
-  //   return this.stockService.getQuote(symbol);
-  // }
-
-  // @Override
-  // public ProfileDTO getProfile(String symbol) {
-  //   return this.stockService.getProfile(symbol);  
-  // }
-
-
-  @Override
-  public List<SymbolDTO> fetchSymbols() {
-    return this.stockService.fetchSymbols();
-  }
 
 }

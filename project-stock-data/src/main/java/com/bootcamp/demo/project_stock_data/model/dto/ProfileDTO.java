@@ -1,12 +1,8 @@
 package com.bootcamp.demo.project_stock_data.model.dto;
 
 import java.time.LocalDateTime;
-import com.bootcamp.demo.project_stock_data.util.UnixTimestampDeserializer;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,9 +22,6 @@ public class ProfileDTO {
   private String ticker;
   @JsonProperty (value = "finnhubIndustry")
   private String mainIndustry;
-  // @JsonDeserialize(using = UnixTimestampDeserializer.class)
-  // @JsonProperty (value = "datetime")
-  // @JsonDeserialize(using = UnixTimestampDeserializer.class)
   private LocalDateTime datetime;
 
   public ProfileDTO(String symbol, String currency, String exchange,

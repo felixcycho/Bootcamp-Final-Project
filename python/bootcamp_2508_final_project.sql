@@ -1,13 +1,13 @@
 
-
-
 create database bootcamp_2508_final_project;
 
+drop table IF EXISTS sp500_symbols;
 create table if not exists sp500_symbols (
-    symbol 					VARCHAR(10) 	primary key UNIQUE NOT NULL,
+    symbol 					VARCHAR(10) 	primary key UNIQUE NOT NULL
 	security 				VARCHAR(255) 	NOT NULL
 );
 
+drop table IF EXISTS sp500_info;
 create table if not exists sp500_info (
     symbol 					VARCHAR(10) 	primary key NOT NULL UNIQUE,
     security 				VARCHAR(255) 	NOT NULL,
@@ -59,30 +59,49 @@ create table sp500_ohlc_data (
     PRIMARY KEY (symbol, date, metric)
 );
 
-create index idx_symbol on sp500_historical_data (symbol);
-create index idx_date   on sp500_historical_data (date);
+create index idx_symbol on sp500_ohlc_data (symbol);
+create index idx_date   on sp500_ohlc_data (date);
 
 alter table sp500_symbols
 drop column company_name;
+
+alter table sp500_info
+add CONSTRAINT fk_symbol
+foreign key (symbol)
+references sp500_symbols(symbol);
+
+alter table sp500_finnhub_profiles
+add CONSTRAINT fk_symbol
+foreign key (symbol)
+references sp500_symbols(symbol);
+
+alter table sp500_ohlc_data
+add CONSTRAINT fk_symbol
+foreign key (symbol)
+references sp500_symbols(symbol);
 
 drop table sp500_symbols;
 drop table sp500_info;
 drop table sp500_ohlc_data;
 
 select * from sp500_symbols;
+DELETE FROM sp500_symbols WHERE symbol IN ('BRK-B', 'BF-B');
 
 select * from sp500_symbols limit 10;
 
 select count(*) from sp500_symbols;
 
 select * from sp500_info;
+DELETE FROM sp500_info WHERE symbol IN ('BRK-B', 'BF-B');
 
 select * from sp500_finnhub_profiles;
+DELETE FROM sp500_finnhub_profiles WHERE symbol IN ('BRK-B', 'BF-B');
 
 select * from sp500_ohlc_data;
+DELETE FROM sp500_finnhub_profiles WHERE symbol IN ('BRK-B', 'BF-B');
 
 -- All AAPL prices
-select * from sp500_ohlc_data where symbol = 'BF-B' order by date;
+select * from sp500_ohlc_data where symbol = 'BRK.B' order by date;
 
 -- Latest close for every stock (sort by symbol)
 select DISTINCT on (symbol) symbol, date, value

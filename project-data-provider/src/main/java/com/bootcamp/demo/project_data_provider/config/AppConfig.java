@@ -16,7 +16,6 @@ public class AppConfig {
 
   @Bean
   ObjectMapper objectMapper() {
-    // return new ObjectMapper();           // stateless
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(new JavaTimeModule());
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
