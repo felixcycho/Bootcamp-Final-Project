@@ -13,5 +13,6 @@ public class QuoteDto {
   private Double dayLow;
   private Double dayOpen;
   private Double previousClosingPrice;
-  private LocalDateTime datetime;
+  private LocalDateTime closingTime;
+  private LocalDateTime currentTime;
 }

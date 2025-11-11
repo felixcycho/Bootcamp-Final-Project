@@ -25,10 +25,10 @@ public class StockDataAppController implements StockDataAppOperation {
     return this.stockService.getProfile(symbol, apiToken);  
   }
 
-  @Override
-  public List<SymbolDTO> fetchSymbols() {
-    return this.stockService.fetchSymbols();
-  }
+  // @Override
+  // public List<SymbolDTO> fetchSymbols() {
+  //   return this.stockService.fetchSymbols();
+  // }
 
   // @Override
   // public List<String> fetchSymbols(String apiToken) {

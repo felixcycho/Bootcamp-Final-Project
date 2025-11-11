@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -44,19 +45,18 @@ public class StockServiceImpl implements StockService {
                 .host(this.baseUrl)                    // e.g. "localhost:8090" or "provider-data-provider:8090"
                 // .host("data-provider-app:8090")
                 // .pathSegment("data/stock/yahoofinance")
-                // .path("/get/current_quote")
                 .path("/get/quote")
                 .queryParam("symbol", symbol)
-                .queryParam("token", this.apiToken)  // FIXED: was "token"
+                .queryParam("apiToken", this.apiToken)  // FIXED: was "token"
                 .build()
                 .toUriString();
 
-        log.info("Fetching quote from provider: {}", url);
+        System.out.println("Fetching quote from provider: " + url);
 
         try {
-            QuoteDTO quoteDTO = restTemplate.getForObject(url, QuoteDTO.class);
+            QuoteDTO quoteDTO = this.restTemplate.getForObject(url, QuoteDTO.class);
             if (quoteDTO == null) {
-                log.warn("Provider returned null for symbol: {}", symbol);
+                System.out.println("Provider returned null for symbol: " + symbol);
                 return null;
             }
             return new QuoteDTO(
@@ -68,13 +68,15 @@ public class StockServiceImpl implements StockService {
                     quoteDTO.getDayLow(),
                     quoteDTO.getDayOpen(),
                     quoteDTO.getPreviousClosingPrice(),
+                    quoteDTO.getClosingTime(),
                     LocalDateTime.now()
             );
         } catch (HttpClientErrorException e) {
-            log.error("HTTP {} error from provider for symbol {}: {}", e.getStatusCode(), symbol, e.getMessage());
+            System.out.println("HTTP " + e.getStatusCode() + " error from provider for symbol: " + symbol + ": " + e.getMessage());
             return null;
         } catch (Exception e) {
-            log.error("Unexpected error fetching quote for {}: {}", symbol, e.toString());
+            System.out.println("Unexpected error fetching quote for symbol: " + symbol + ": " + e.toString());
+            e.printStackTrace();
             return null;
         }
     }
@@ -88,16 +90,16 @@ public class StockServiceImpl implements StockService {
                 // .pathSegment("data/stock/finnhub")
                 .path("/get/profile")
                 .queryParam("symbol", symbol)
-                .queryParam("token", this.apiToken)  // FIXED: was "token"
+                .queryParam("apiToken", this.apiToken)  // FIXED: was "token"
                 .build()
                 .toUriString();
 
-        log.info("Fetching profile from provider: {}", url);
+        System.out.println("Fetching profile from provider: " + url);
 
         try {
-            ProfileDTO profileDTO = restTemplate.getForObject(url, ProfileDTO.class);
+            ProfileDTO profileDTO = this.restTemplate.getForObject(url, ProfileDTO.class);
             if (profileDTO == null) {
-                log.warn("Provider returned null for symbol: {}", symbol);
+                System.out.println("Provider returned null for symbol: " + symbol);
                 return null;
             }
             return new ProfileDTO(
@@ -111,7 +113,8 @@ public class StockServiceImpl implements StockService {
               LocalDateTime.now()
            );
         } catch (Exception e) {
-            log.error("Failed to fetch profile for {}: {}", symbol, e.toString());
+            System.out.println("Failed to fetch profile for symbol: " + symbol + " " + e.toString());
+            e.printStackTrace();
             return null;
         }
     }
@@ -148,4 +151,5 @@ public class StockServiceImpl implements StockService {
         log.info("Loaded {} symbols from {}", symbols.size(), filePath);
         return symbols;
     }
+
 }

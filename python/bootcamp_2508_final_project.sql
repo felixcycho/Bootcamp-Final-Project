@@ -1,5 +1,6 @@
 
 
+
 create database bootcamp_2508_final_project;
 
 create table if not exists sp500_symbols (
@@ -81,7 +82,7 @@ select * from sp500_finnhub_profiles;
 select * from sp500_ohlc_data;
 
 -- All AAPL prices
-select * from sp500_ohlc_data where symbol = 'AAPL' order by date;
+select * from sp500_ohlc_data where symbol = 'BF-B' order by date;
 
 -- Latest close for every stock (sort by symbol)
 select DISTINCT on (symbol) symbol, date, value

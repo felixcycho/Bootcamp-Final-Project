@@ -61,6 +61,7 @@ public class StockServiceImpl implements StockService {
     // return this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
     try {
       QuoteDTO quoteDTO = this.restTemplate.getForObject(urlOfQuote, QuoteDTO.class);
+      System.out.println("1111");
       if (quoteDTO == null) 
         return null;
       return new QuoteDTO(
@@ -72,19 +73,19 @@ public class StockServiceImpl implements StockService {
         quoteDTO.getDayLow(),
         quoteDTO.getDayOpen(),
         quoteDTO.getPreviousClosingPrice(),
+        quoteDTO.getClosingTime(),
         LocalDateTime.now()
       );
     } catch (HttpClientErrorException e) {
       // Handle client error (4xx)
-      System.err.println("Client error: " + e.getMessage());
+      System.out.println("Client error: " + e.getMessage());
       return null;
     } catch (Exception e) {
       // Handle other errors
-      System.err.println("Error fetching quote: " + e.getMessage());
+      System.out.println("Error fetching quote: " + e.getMessage());
       return null;
     }
   }
-
 
   @Override
   public ProfileDTO getProfile(String symbol, String apiToken) {
@@ -100,7 +101,8 @@ public class StockServiceImpl implements StockService {
     System.out.println("Stock profile url = " + urlOfProfile);
     // return this.restTemplate.getForObject(urlOfCompanyProfile, CompanyProfileDTO.class);
     try {
-      ProfileDTO profileDTO = this.restTemplate.getForObject(urlOfProfile, ProfileDTO.class);
+      ProfileDTO profileDTO = restTemplate.getForObject(urlOfProfile, ProfileDTO.class);
+      System.out.println("2222");
       if (profileDTO == null) 
         return null;
       return new ProfileDTO(
@@ -115,41 +117,41 @@ public class StockServiceImpl implements StockService {
       );
     } catch (Exception e) {
         // Log the error and return null or throw a custom exception
-        System.err.println("Error fetching schedule: " + e.getMessage());
-        return null;
+         System.out.println("Error fetching schedule: " + e.getMessage());
+         return null;
     }
   }
 
-  @Override
-  public List<SymbolDTO> fetchSymbols() {
-    List<SymbolDTO> symbols = new ArrayList<>();
-    Path filePath = Path.of("C:/github/Bootcamp-Final-Project/python/sp500_symbols.txt");
+  // @Override
+  // public List<SymbolDTO> fetchSymbols() {
+  //   List<SymbolDTO> symbols = new ArrayList<>();
+  //   Path filePath = Path.of("C:/github/Bootcamp-Final-Project/python/sp500_symbols.txt");
 
-    if (!Files.exists(filePath)) {
-        throw new IllegalStateException("File not found: " + filePath);
-    }
-    try (BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            line = line.trim();
-            if (line.isEmpty() || line.startsWith("#")) {
-                continue; // Skip empty lines or comments
-            }
-            String[] parts = line.split("\\s+", 2); // Split on first whitespace
-            if (parts.length == 2) {
-                String symbol = parts[0].trim();
-                String stockName = parts[1].trim();
-                symbols.add(new SymbolDTO(symbol, stockName));
-            } else {
-                // Log warning or skip malformed line
-                System.err.println("Skipping malformed line: " + line);
-            }
-        }
-    } catch (IOException e) {
-        throw new UncheckedIOException("Failed to read symbols file: " + filePath, e);
-    }
-    return symbols;
-  }
+  //   if (!Files.exists(filePath)) {
+  //       throw new IllegalStateException("File not found: " + filePath);
+  //   }
+  //   try (BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
+  //       String line;
+  //       while ((line = br.readLine()) != null) {
+  //           line = line.trim();
+  //           if (line.isEmpty() || line.startsWith("#")) {
+  //               continue; // Skip empty lines or comments
+  //           }
+  //           String[] parts = line.split("\\s+", 2); // Split on first whitespace
+  //           if (parts.length == 2) {
+  //               String symbol = parts[0].trim();
+  //               String stockName = parts[1].trim();
+  //               symbols.add(new SymbolDTO(symbol, stockName));
+  //           } else {
+  //               // Log warning or skip malformed line
+  //               System.err.println("Skipping malformed line: " + line);
+  //           }
+  //       }
+  //   } catch (IOException e) {
+  //       throw new UncheckedIOException("Failed to read symbols file: " + filePath, e);
+  //   }
+  //   return symbols;
+  // }
 
 
   // @Override

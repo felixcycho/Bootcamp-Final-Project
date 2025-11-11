@@ -3,6 +3,9 @@ package com.bootcamp.demo.project_data_provider.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Configuration
 public class AppConfig {
@@ -10,5 +13,15 @@ public class AppConfig {
   RestTemplate restTemplate() {
     return new RestTemplate();
   }
+
+   @Bean
+  ObjectMapper objectMapper() {
+    // return new ObjectMapper();           // stateless
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    return objectMapper;
+  }
+
   
 }

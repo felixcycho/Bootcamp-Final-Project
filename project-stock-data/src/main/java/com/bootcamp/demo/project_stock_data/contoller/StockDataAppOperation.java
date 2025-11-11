@@ -13,9 +13,15 @@ public interface StockDataAppOperation {
   QuoteDTO getQuote(@RequestParam String symbol, @RequestParam String apiToken);
   
   @GetMapping(value = "/get/profile")
-  // CompanyProfileDTO getCompanyProfile(
+  // ProfileDTO getProfile(
     // @RequestParam(value = "s") String symbol, @RequestParam String apiToken);
   ProfileDTO getProfile(@RequestParam String symbol, @RequestParam String apiToken);
+
+  // @GetMapping(value = "/get/quote")
+  // QuoteDTO getQuote(@RequestParam String symbol);
+  
+  // @GetMapping(value = "/get/profile")
+  // ProfileDTO getProfile(@RequestParam String symbol);
 
   @GetMapping(value = "/fetch/symbols")
   List<SymbolDTO> fetchSymbols();

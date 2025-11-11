@@ -12,7 +12,7 @@ public interface StockService {
    ProfileDTO getProfile(String symbol, String apiToken);
 
    // List<String> fetchSymbols(String apiToken);
-   List<SymbolDTO> fetchSymbols();
+   // List<SymbolDTO> fetchSymbols();
 
    // ! Not feasible, just for example only
    // List<QuoteDTO> fetchAllSP500Quotes(List<String> symbols, String apiToken);
