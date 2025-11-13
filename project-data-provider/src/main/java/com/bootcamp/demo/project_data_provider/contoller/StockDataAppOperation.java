@@ -12,25 +12,8 @@ public interface StockDataAppOperation {
   QuoteDTO getQuote(@RequestParam String symbol, @RequestParam String apiToken);
   
   @GetMapping(value = "/get/profile")
-  // CompanyProfileDTO getCompanyProfile(
+  // ProfileDTO getProfile(
     // @RequestParam(value = "s") String symbol, @RequestParam String apiToken);
   ProfileDTO getProfile(@RequestParam String symbol, @RequestParam String apiToken);
 
-  // @GetMapping(value = "/fetch/symbols")
-  // List<SymbolDTO> fetchSymbols();
-  
-  // @GetMapping(value = "/fetch/symbols")
-  // List<String> fetchSymbols(@RequestParam String apiToken);
-
-
-  // ! Not feasible, just for example only
-  // @GetMapping(value = "/fetch/quotes")
-  // List<QuoteDTO> fetchAllSP500Quotes(
-  //   @RequestParam List<String> symbols, @RequestParam String apiToken);
-
-
-  // ! Not feasible, just for example only
-  // @GetMapping(value = "/fetch/profiles")
-  // List<ProfileDTO> fetchAllSP500Profiles(
-  //   @RequestParam List<String> symbols, @RequestParam String apiToken);
 }

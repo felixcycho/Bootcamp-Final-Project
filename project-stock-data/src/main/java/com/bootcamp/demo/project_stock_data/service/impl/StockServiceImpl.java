@@ -4,7 +4,7 @@ import com.bootcamp.demo.project_stock_data.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.QuoteDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.SymbolDTO;
 import com.bootcamp.demo.project_stock_data.service.StockService;
-import lombok.extern.slf4j.Slf4j;
+// import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -21,9 +21,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
-@Slf4j
+// @Slf4j
 public class StockServiceImpl implements StockService {
 
     @Value("${app.provider.base-url}")
@@ -39,15 +38,47 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    public List<SymbolDTO> fetchSymbols() {
+        List<SymbolDTO> symbols = new ArrayList<>();
+        Path filePath = Path.of("C:/github/Bootcamp-Final-Project/python/sp500_symbols.txt");
+
+        if (!Files.exists(filePath)) {
+            throw new IllegalStateException("File not found: " + filePath);
+        }
+
+        try (BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.trim();
+                if (line.isEmpty() || line.startsWith("#")) {
+                    continue;
+                }
+                String[] parts = line.split("\\s+", 2);
+                if (parts.length == 2) {
+                    String symbol = parts[0].trim();
+                    String stockName = parts[1].trim();
+                    symbols.add(new SymbolDTO(symbol, stockName));
+                } else {
+                    System.out.println("Skipping malformed line in symbols file: " + line);
+                }
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException("Failed to read symbols file: " + filePath, e);
+        }
+        System.out.println("Loaded " +symbols.size() + " symbols from " + filePath);
+        return symbols;
+    }
+
+    @Override
     public QuoteDTO getQuote(String symbol, String apiToken) {
         String url = UriComponentsBuilder.newInstance()
                 .scheme("http")
-                .host(this.baseUrl)                    // e.g. "localhost:8090" or "provider-data-provider:8090"
-                // .host("data-provider-app:8090")
-                // .pathSegment("data/stock/yahoofinance")
+                .host(this.baseUrl)                    // e.g. "localhost:8090" or "project-data-provider:8090"
+                // .host("project-data-provider:8090")
+                // .pathSegment("data/stock/finnhub")
                 .path("/get/quote")
                 .queryParam("symbol", symbol)
-                .queryParam("apiToken", this.apiToken)  // FIXED: was "token"
+                .queryParam("apiToken", this.apiToken)
                 .build()
                 .toUriString();
 
@@ -117,39 +148,6 @@ public class StockServiceImpl implements StockService {
             e.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public List<SymbolDTO> fetchSymbols() {
-        List<SymbolDTO> symbols = new ArrayList<>();
-        Path filePath = Path.of("C:/github/Bootcamp-Final-Project/python/sp500_symbols.txt");
-
-        if (!Files.exists(filePath)) {
-            throw new IllegalStateException("File not found: " + filePath);
-        }
-
-        try (BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                line = line.trim();
-                if (line.isEmpty() || line.startsWith("#")) {
-                    continue;
-                }
-                String[] parts = line.split("\\s+", 2);
-                if (parts.length == 2) {
-                    String symbol = parts[0].trim();
-                    String stockName = parts[1].trim();
-                    symbols.add(new SymbolDTO(symbol, stockName));
-                } else {
-                    log.warn("Skipping malformed line in symbols file: {}", line);
-                }
-            }
-        } catch (IOException e) {
-            throw new UncheckedIOException("Failed to read symbols file: " + filePath, e);
-        }
-
-        log.info("Loaded {} symbols from {}", symbols.size(), filePath);
-        return symbols;
     }
 
 }

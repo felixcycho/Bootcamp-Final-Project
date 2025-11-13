@@ -82,6 +82,7 @@ references sp500_symbols(symbol);
 
 drop table sp500_symbols;
 drop table sp500_info;
+drop table sp500_finnhub_profiles;
 drop table sp500_ohlc_data;
 
 select * from sp500_symbols;
@@ -101,7 +102,7 @@ select * from sp500_ohlc_data;
 DELETE FROM sp500_finnhub_profiles WHERE symbol IN ('BRK-B', 'BF-B');
 
 -- All AAPL prices
-select * from sp500_ohlc_data where symbol = 'BRK.B' order by date;
+select * from sp500_ohlc_data where symbol = 'ZTS' order by date;
 
 -- Latest close for every stock (sort by symbol)
 select DISTINCT on (symbol) symbol, date, value

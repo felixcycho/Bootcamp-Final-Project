@@ -24,26 +24,4 @@ public class StockDataAppController implements StockDataAppOperation {
     return this.stockService.getProfile(symbol, apiToken);  
   }
 
-  // @Override
-  // public List<SymbolDTO> fetchSymbols() {
-  //   return this.stockService.fetchSymbols();
-  // }
-
-  // @Override
-  // public List<String> fetchSymbols(String apiToken) {
-  //   return this.stockService.fetchSymbols(apiToken);
-  // }
-
-  // ! Not feasible, just for example only
-  // @Override
-  // public List<QuoteDTO> fetchAllSP500Quotes(List<String> symbols, String apiToken) {
-  //   return this.stockService.fetchAllSP500Quotes(symbols, apiToken);
-  // }
-
-  // ! Not feasible, just for example only
-  // @Override
-  // public List<ProfileDTO> fetchAllSP500Profiles(List<String> symbols, String apiToken) {
-  //   return this.stockService.fetchAllSP500Profiles(symbols, apiToken);
-  // }
-
 }

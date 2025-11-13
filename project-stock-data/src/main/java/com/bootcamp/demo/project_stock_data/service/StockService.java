@@ -7,13 +7,11 @@ import com.bootcamp.demo.project_stock_data.model.dto.SymbolDTO;
 
 public interface StockService {
 
+   List<SymbolDTO> fetchSymbols();
+
    QuoteDTO getQuote(String symbol, String apiToken);
-   // QuoteDTO getQuote(String symbol);
 
    ProfileDTO getProfile(String symbol, String apiToken);
-   // ProfileDTO getProfile(String symbol);
 
-   // List<String> fetchSymbols(String apiToken);
-   List<SymbolDTO> fetchSymbols();
 
 }
