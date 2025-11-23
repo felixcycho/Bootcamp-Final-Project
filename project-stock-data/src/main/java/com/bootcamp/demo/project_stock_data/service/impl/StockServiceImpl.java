@@ -3,6 +3,9 @@ package com.bootcamp.demo.project_stock_data.service.impl;
 import com.bootcamp.demo.project_stock_data.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.QuoteDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.SymbolDTO;
+import com.bootcamp.demo.project_stock_data.repository.InfoRepository;
+import com.bootcamp.demo.project_stock_data.repository.OhlcRepository;
+import com.bootcamp.demo.project_stock_data.repository.ProfileRepository;
 import com.bootcamp.demo.project_stock_data.service.StockService;
 // import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,16 +34,28 @@ public class StockServiceImpl implements StockService {
     @Value("${app.provider.api-token}")
     private String apiToken;
 
-    private final RestTemplate restTemplate;
+    private final String symbolsFilePath = 
+      "C:/github/Bootcamp-Final-Project/python/sp500_symbols.txt";
 
-    public StockServiceImpl(RestTemplate restTemplate) {
+    private final RestTemplate restTemplate;
+    private final InfoRepository infoRepository;
+    private final ProfileRepository profileRepository;
+    private final OhlcRepository ohlcRepository;
+    
+    public StockServiceImpl (RestTemplate restTemplate, 
+                            InfoRepository infoRepository,
+                            ProfileRepository profileRepository,
+                            OhlcRepository ohlcRepository) {
         this.restTemplate = restTemplate;
+        this.infoRepository = infoRepository;
+        this.profileRepository = profileRepository;
+        this.ohlcRepository = ohlcRepository;
     }
 
     @Override
     public List<SymbolDTO> fetchSymbols() {
         List<SymbolDTO> symbols = new ArrayList<>();
-        Path filePath = Path.of("C:/github/Bootcamp-Final-Project/python/sp500_symbols.txt");
+        Path filePath = Path.of(this.symbolsFilePath);
 
         if (!Files.exists(filePath)) {
             throw new IllegalStateException("File not found: " + filePath);
@@ -113,7 +128,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public ProfileDTO getProfile(String symbol, String apiToken) {
+    public ProfileDTO getProfile(String symbol) {
         String url = UriComponentsBuilder.newInstance()
                 .scheme("http")
                 .host(this.baseUrl)

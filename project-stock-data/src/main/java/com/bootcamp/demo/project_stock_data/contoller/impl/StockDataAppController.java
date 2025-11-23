@@ -1,13 +1,17 @@
 package com.bootcamp.demo.project_stock_data.contoller.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import com.bootcamp.demo.project_stock_data.contoller.StockDataAppOperation;
+import com.bootcamp.demo.project_stock_data.model.dto.InfoDTO;
+import com.bootcamp.demo.project_stock_data.model.dto.OhlcDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.ProfileDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.QuoteDTO;
 import com.bootcamp.demo.project_stock_data.model.dto.SymbolDTO;
 import com.bootcamp.demo.project_stock_data.service.StockService;
+import io.micrometer.common.lang.Nullable;
 
 
 @RestController
@@ -26,20 +30,22 @@ public class StockDataAppController implements StockDataAppOperation {
   }
 
   @Override
-  public ProfileDTO getProfile(String symbol, String apiToken) {
-    return this.stockService.getProfile(symbol, apiToken);  
+  public ProfileDTO getProfile(String symbol) {
+    return this.stockService.getProfile(symbol);  
   }
 
-  // ! Not feasible, just for example only
-  // @Override
-  // public List<QuoteDTO> fetchAllSP500Quotes(List<String> symbols, String apiToken) {
-  //   return this.stockService.fetchAllSP500Quotes(symbols, apiToken);
-  // }
+  @Override
+  public InfoDTO getInfo(String symbol) {
+    return this.stockService.getInfo(symbol);
+  }
 
-  // ! Not feasible, just for example only
-  // @Override
-  // public List<ProfileDTO> fetchAllSP500Profiles(List<String> symbols, String apiToken) {
-  //   return this.stockService.fetchAllSP500Profiles(symbols, apiToken);
-  // }
+  @Override
+  public List<OhlcDTO> getOhlcs(
+    String symbol, 
+    @Nullable LocalDate startDate, 
+    @Nullable LocalDate endDate) {
+    return this.stockService.getOhlcs(symbol, startDate, endDate);
+  }
+
 
 }
